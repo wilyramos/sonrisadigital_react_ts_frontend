@@ -3,20 +3,21 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PublicLayout from "./layouts/PublicLayout";
 import PrivateLayout from "./layouts/PrivateLayout";
 import Home from "./views/home";
+import LogiwView from "./views/auth/LogiwView";
 
 
 
 
 export default function App() {
     return (
-        <div className="px-8 lg:px-16">
+        <div className="max-w-5xl mx-auto">
             <Router>
                 <Routes>
                     <Route element={<PublicLayout />}>
                         
                         {/* Rutas publicas */}
                         <Route path="/" element={<Home />} index />
-                        <Route path="/login" element={<h1>Login</h1>} />
+                        <Route path="/login" element={<LogiwView />} />
                         <Route path="/register" element={<h1>Register</h1>} />
                         <Route path="/forgot-password" element={<h1>Forgot Password</h1>} />
 

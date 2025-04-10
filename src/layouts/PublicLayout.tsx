@@ -1,8 +1,11 @@
+import { ToastContainer } from "react-toastify";
 import Navigation from "../components/Nav/Navigation";
 import { Outlet } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
 
 
 export default function PublicLayout() {
+    
     return (
         <>
             <div className="flex flex-col min-h-screen">
@@ -17,6 +20,18 @@ export default function PublicLayout() {
                     </div>
                 </footer>
             </div>
+            <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
         </>
     )
 }

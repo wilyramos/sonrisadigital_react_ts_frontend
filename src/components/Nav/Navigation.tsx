@@ -82,10 +82,7 @@ export default function Navigation() {
                                 {/* Add more sub-links here */}
                             </div>
                         </Transition>
-
-                    
                     </div> 
-
                 </div>
 
                 {/* Desktop Icons */}
@@ -102,12 +99,7 @@ export default function Navigation() {
                         Whatsapp
                     </button>
                 </div>
-
-               
             </div>
-
-           
-            
         </nav>
     );
 }
