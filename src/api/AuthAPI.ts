@@ -1,6 +1,6 @@
 import api from "@/lib/axios";
 import { isAxiosError } from "axios";
-import { AuthLoginForm } from "@/types/index";
+import { AuthLoginForm, userSchema } from "@/types/index";
 
 
 
@@ -28,6 +28,23 @@ export async function authenticateUser(formData: AuthLoginForm) {
     } catch (error) {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error || "Error al iniciar sesión");
+        }
+    }
+}
+
+export async function getUser(){
+    try {
+        const url = "/auth/user";
+        const { data } = await api.get(url);
+        console.log(data)
+        const response = userSchema.safeParse(data);
+        console.log(response)
+        if(response.success) {
+            return response.data;
+        }
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error || "Error al obtener el usuario");
         }
     }
 }

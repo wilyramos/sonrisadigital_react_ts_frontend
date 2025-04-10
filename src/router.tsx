@@ -1,10 +1,11 @@
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PublicLayout from "./layouts/PublicLayout";
-import PrivateLayout from "./layouts/PrivateLayout";
+import PacienteLayout from "./layouts/PacienteLayout";
 import Home from "./views/home";
 import LogiwView from "./views/auth/LogiwView";
 import RegisterView from "./views/auth/RegisterView";
+import AdminLayout from "./layouts/AdminLayout";
 
 
 
@@ -22,14 +23,19 @@ export default function App() {
                         <Route path="/register" element={<RegisterView />} />
                         <Route path="/forgot-password" element={<h1>Forgot Password</h1>} />
 
-                        {/* <Route path="/places/:placeId" element={<PlaceView />} />
-                        <Route path="/explora" element={<Categorias />} /> */}
+                       
                     </Route>
 
-                    <Route element={<PrivateLayout />}>
+                    <Route element={<PacienteLayout />}>
                         {/* Rutas privadas */}
                         <Route path="/profile" element={<h1>Profile</h1>} />
                         <Route path="/settings" element={<h1>Settings</h1>} />
+                    </Route>
+
+                    <Route element={<AdminLayout />}>
+
+                        <Route path="/dashboard" element={<h1>Afin dashboard</h1>}></Route>
+                        
 
                     </Route>
                 </Routes>

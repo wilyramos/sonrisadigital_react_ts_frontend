@@ -27,6 +27,7 @@ export default function RegisterView() {
     } = useForm<AuthRegisterForm>({
         defaultValues: initialValues
     });
+    
 
     const password = watch("password");
 

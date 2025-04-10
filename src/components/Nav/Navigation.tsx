@@ -1,17 +1,15 @@
 import { useState } from 'react';
 import Logo from '../Logo';
 import { Link } from 'react-router-dom';
-import {  FaUser, FaWhatsapp } from 'react-icons/fa';
+import { FaUser, FaWhatsapp } from 'react-icons/fa';
 import { Transition } from '@headlessui/react'; // Import Transition for animations
 
-export default function Navigation() {
-
+export default function Navigation({ isPrivate }: { isPrivate?: boolean }) {
     const [isNosotrosOpen, setIsNosotrosOpen] = useState(false);
     const [isServiciosOpen, setIsServiciosOpen] = useState(false);
 
-
     return (
-        <nav className='bg-white py-6'>
+        <nav className='bg-white py-6'> {/* Added shadow for better separation */}
             <div className='container mx-auto px-4 flex justify-between items-center'>
                 {/* Logo */}
                 <div className="w-36 flex items-center justify-start">
@@ -53,7 +51,8 @@ export default function Navigation() {
                             </div>
                         </Transition>
                     </div>
-                    <div className="relative"
+                    <div
+                        className="relative"
                         onMouseEnter={() => setIsServiciosOpen(true)}
                         onMouseLeave={() => setIsServiciosOpen(false)}
                     >
@@ -82,7 +81,12 @@ export default function Navigation() {
                                 {/* Add more sub-links here */}
                             </div>
                         </Transition>
-                    </div> 
+                    </div>
+                    {isPrivate && (
+                        <Link to="/dashboard" className="text-gray-700 hover:text-teal-600 focus:outline-none">
+                            Dashboard {/* Added a link for the private area */}
+                        </Link>
+                    )}
                 </div>
 
                 {/* Desktop Icons */}
@@ -91,7 +95,7 @@ export default function Navigation() {
                         <FaUser className="h-6 w-6" />
                     </Link>
                     <button
-                        className="flex items-center text-gray-50 hover:text-lime-600 focus:outline-none cursor-pointer bg-gray-950 rounded-full px-4 py-2"
+                        className="flex items-center text-white hover:text-lime-300 focus:outline-none cursor-pointer bg-lime-500 rounded-full px-4 py-2"
                         onClick={() => window.open('https://api.whatsapp.com/send?phone=51907103353&text=Hola%20quiero%20agendar%20una%20cita', '_blank')}
                         aria-label="WhatsApp"
                     >

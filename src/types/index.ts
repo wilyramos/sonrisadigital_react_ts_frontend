@@ -19,11 +19,13 @@ export type AuthRegisterForm = Pick<Auth, 'name' | 'email' | 'password' | 'passw
 
 export const userSchema = authSchema.pick({
     name: true,
-    email: true,
+    email: true
 }).extend({
-    id: z.string(),
-    createdAt: z.date(),
-    updatedAt: z.date(),
+    id: z.number(),
+    phone: z.string().nullable(),
+    role: z.string()
 })
+
+export type User = z.infer<typeof userSchema>
 
 
