@@ -4,6 +4,7 @@ import PublicLayout from "./layouts/PublicLayout";
 import PrivateLayout from "./layouts/PrivateLayout";
 import Home from "./views/home";
 import LogiwView from "./views/auth/LogiwView";
+import RegisterView from "./views/auth/RegisterView";
 
 
 
@@ -18,7 +19,7 @@ export default function App() {
                         {/* Rutas publicas */}
                         <Route path="/" element={<Home />} index />
                         <Route path="/login" element={<LogiwView />} />
-                        <Route path="/register" element={<h1>Register</h1>} />
+                        <Route path="/register" element={<RegisterView />} />
                         <Route path="/forgot-password" element={<h1>Forgot Password</h1>} />
 
                         {/* <Route path="/places/:placeId" element={<PlaceView />} />
