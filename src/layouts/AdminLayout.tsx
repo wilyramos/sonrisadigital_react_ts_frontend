@@ -1,32 +1,42 @@
 import { ToastContainer } from "react-toastify";
 import NavigationAdmin from "../components/Nav/NavigationAdmin"; // Componente de navegación para el administrador
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
-import { useEffect } from "react";
-import { useAuth } from "@/hooks/useAuth"; // Asegúrate de que la ruta sea correcta
-import { ClipLoader } from "react-spinners"; // Importa un componente de spinner
-
+import { useAuth } from "@/hooks/useAuth";
+import { ClipLoader } from "react-spinners";
 export default function AdminLayout() {
-    const { user, isError, isLoading } = useAuth(); // Asumiendo que useAuth devuelve isAdmin
-    const navigate = useNavigate();
 
-   const isAdmin = user?.role
-
-
+    const { user, isError, isLoading } = useAuth();
 
     if (isError) {
         return <Navigate to="/login" />;
     }
 
-    
 
     return (
         <>
-            <div className="flex flex-col min-h-screen"> {/* Fondo para el layout */}
-                <NavigationAdmin /> {/* Componente de navegación específico para el administrador */}
+            <div className="flex flex-col min-h-screen">
+                <NavigationAdmin />
 
-                <main className="container mx-auto px-4 py-8 flex-grow">
-                    <Outlet />
+                <main className="container mx-auto px-4 py-8 flex flex-grow">
+                    {
+                        isLoading ? (
+                            <div className="flex flex-col items-center justify-center w-full">
+                                <ClipLoader color="#10b981" size={40} /> {/* Spinner de carga */}
+                                <p className="mt-2 text-gray-600 text-sm">Cargando...</p>
+                            </div>
+                        ) : (
+                            user?.role === 'admin' ? (
+                                <section className="w-full">
+                                    <div className=" p-6">
+                                        <Outlet />
+                                    </div>
+                                </section>
+                            ) : (
+                                <Navigate to="/login" />
+                            )
+                        )
+                    }
                 </main>
 
                 <footer className="mt-8">

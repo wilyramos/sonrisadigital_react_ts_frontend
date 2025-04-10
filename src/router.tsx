@@ -6,6 +6,7 @@ import Home from "./views/home";
 import LogiwView from "./views/auth/LogiwView";
 import RegisterView from "./views/auth/RegisterView";
 import AdminLayout from "./layouts/AdminLayout";
+import Dashboard from "./components/Admin/Dashboard";
 
 
 
@@ -34,7 +35,7 @@ export default function App() {
 
                     <Route element={<AdminLayout />}>
 
-                        <Route path="/dashboard" element={<h1>Afin dashboard</h1>}></Route>
+                        <Route path="/dashboard" element={<Dashboard />} />
                         
 
                     </Route>

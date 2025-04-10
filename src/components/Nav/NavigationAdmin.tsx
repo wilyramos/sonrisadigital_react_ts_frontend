@@ -1,20 +1,28 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Logo from '../Logo';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FaUsers, FaCalendarAlt, FaTooth, FaUserMd, FaSignOutAlt } from 'react-icons/fa';
 import { Transition } from '@headlessui/react';
+import { useQueryClient } from '@tanstack/react-query';
 
 export default function AdminNavigation() {
     const [pacientesOpen, setPacientesOpen] = useState(false);
     const [citasOpen, setCitasOpen] = useState(false);
     const [doctoresOpen, setDoctoresOpen] = useState(false);
-    const navigate = useNavigate();
-    const logout = () => { localStorage.removeItem('token'); navigate('/login'); };
+
+    const queryClient = useQueryClient();
+    const logout = () => {
+        localStorage.removeItem('AUTH_TOKEN_SONRISADIGITAL')
+        queryClient.invalidateQueries({ queryKey: ['user'] })
+    }
+
 
     return (
         <nav className=' text-gray-700 py-4'>
             <div className='container mx-auto px-4 flex justify-between items-center'>
-                <Link to="/dashboard" className="w-36 flex items-center justify-start focus:outline-none"><Logo /></Link>
+                <Link to="/" className="w-36 flex items-center justify-start focus:outline-none">
+                <Logo />
+                </Link>
                 <div className="hidden md:flex space-x-4 items-center">
                     <div className="relative" onMouseEnter={() => setPacientesOpen(true)} onMouseLeave={() => setPacientesOpen(false)}>
                         <Link to="/admin/pacientes" className="hover:text-blue-200 focus:outline-none flex items-center"><FaUsers className="mr-1" /> Pacientes</Link>
