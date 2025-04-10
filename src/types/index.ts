@@ -27,5 +27,29 @@ export const userSchema = authSchema.pick({
 })
 
 export type User = z.infer<typeof userSchema>
+export type UserForm = Pick<User, 'name' | 'email' | 'phone'>
+
+/** User List */
+export type UserList = User[]
+export type UserListResponse = {
+    users: UserList
+    total: number
+}
+
+/** Medic */
 
 
+export const medicSchema = z.object({
+    id: z.number(),
+    name: z.string().min(1, { message: 'El nombre es requerido.' }),
+    email: z.string().email({ message: 'El correo electrónico no es válido.' }),
+    phone: z.string(),
+    speciality: z.string(),
+})
+export type Medic = z.infer<typeof medicSchema>
+export type MedicFormData = Pick<Medic, 'name' | 'email' | 'phone' | 'speciality'>;
+export type MedicList = Medic[];
+export type MedicListResponse = {
+    medicos: MedicList
+    total: number
+}

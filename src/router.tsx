@@ -7,6 +7,7 @@ import LogiwView from "./views/auth/LogiwView";
 import RegisterView from "./views/auth/RegisterView";
 import AdminLayout from "./layouts/AdminLayout";
 import Dashboard from "./components/Admin/Dashboard";
+import Medicos from "./components/Admin/Medicos";
 
 
 
@@ -36,6 +37,7 @@ export default function App() {
                     <Route element={<AdminLayout />}>
 
                         <Route path="/dashboard" element={<Dashboard />} />
+                        <Route path="/admin/medicos" element={<Medicos />} />
                         
 
                     </Route>

@@ -19,7 +19,7 @@ export default function Dashboard() {
             label: "Odontólogos",
             value: 12,
             icon: <FaUserMd className="text-green-500 text-3xl" />,
-            to: "/admin/odontologos",
+            to: "/admin/medicos",
         },
         {
             label: "Citas de hoy",

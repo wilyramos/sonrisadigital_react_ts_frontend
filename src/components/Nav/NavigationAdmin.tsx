@@ -43,10 +43,10 @@ export default function AdminNavigation() {
                         </Transition>
                     </div>
                     <div className="relative" onMouseEnter={() => setDoctoresOpen(true)} onMouseLeave={() => setDoctoresOpen(false)}>
-                        <Link to="/admin/doctores" className="hover:text-blue-200 focus:outline-none flex items-center"><FaUserMd className="mr-1" /> Doctores</Link>
+                        <Link to="/admin/medicos" className="hover:text-blue-200 focus:outline-none flex items-center"><FaUserMd className="mr-1" /> Doctores</Link>
                         <Transition show={doctoresOpen} enter="transition-opacity duration-150" enterFrom="opacity-0" enterTo="opacity-100" leave="transition-opacity duration-150" leaveFrom="opacity-100" leaveTo="opacity-0">
                             <div className="absolute left-0 mt-2 py-2 w-48 bg-white text-gray-700 shadow-md rounded-md z-10">
-                                <Link to="/admin/doctores/listar" className="block px-4 py-2 hover:bg-gray-100 focus:outline-none">Listar</Link>
+                                <Link to="/admin/medicos" className="block px-4 py-2 hover:bg-gray-100 focus:outline-none">Listar</Link>
                                 <Link to="/admin/doctores/crear" className="block px-4 py-2 hover:bg-gray-100 focus:outline-none">Crear</Link>
                             </div>
                         </Transition>
