@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import AddMedicModal from "./AddMedicModal";
 import { useQuery } from "@tanstack/react-query";
 import { getMedics } from "@/api/MedicAPI";
-import MedicsList from "./Medic/MedicsList";
+import MedicsList from "./MedicsList";
 import ClipLoader from "react-spinners/ClipLoader";
 
 export default function Medicos() {

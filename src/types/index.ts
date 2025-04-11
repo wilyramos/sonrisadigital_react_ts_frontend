@@ -31,10 +31,16 @@ export type UserForm = Pick<User, 'name' | 'email' | 'phone'>
 
 /** User List */
 export type UserList = User[]
-export type UserListResponse = {
-    users: UserList
-    total: number
-}
+
+export const userListSchema = z.object({
+    users: userSchema.array(),
+    total: z.number(),
+    totalPages: z.number(),
+    currentPage: z.number()
+})
+
+export type UserListResponse = z.infer<typeof userListSchema>
+
 
 /** Medic */
 
@@ -53,3 +59,17 @@ export type MedicListResponse = {
     medicos: MedicList
     total: number
 }
+
+/** Paciente */
+
+export const pacienteSchema = z.object({
+    name: z.string().min(1, { message: 'El nombre es requerido.' }),
+    email: z.string().email({ message: 'El correo electrónico no es válido.' }),
+    password: z.string().min(6, { message: 'La contraseña debe tener al menos 6 caracteres.' }),
+    passwordConfirmation: z.string().min(6, { message: 'La confirmación de contraseña es requerida.' }),
+    phone: z.string(),
+    role: z.literal('paciente'),
+})
+
+export type Paciente = z.infer<typeof pacienteSchema>
+export type PacienteFormData = Pick<Paciente, 'name' | 'email' | 'password' | 'passwordConfirmation' | 'phone'>;

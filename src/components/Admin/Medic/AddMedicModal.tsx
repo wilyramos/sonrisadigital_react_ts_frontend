@@ -7,7 +7,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
 import { toast } from 'react-toastify';
 import type { MedicFormData } from '@/types/index';
 import { createMedic } from '@/api/MedicAPI';
-import MedicForm from './Medic/MedicForm';
+import MedicForm from './MedicForm';
 import { useQueryClient } from '@tanstack/react-query';
 
 export default function AddMedicModal() {

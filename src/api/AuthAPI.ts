@@ -1,6 +1,7 @@
 import api from "@/lib/axios";
 import { isAxiosError } from "axios";
-import { AuthLoginForm, userSchema } from "@/types/index";
+import { AuthLoginForm } from "@/types/index";
+import { userSchema, userListSchema } from "@/types/index";
 
 
 
@@ -37,6 +38,7 @@ export async function getUser(){
         const url = "/auth/user";
         const { data } = await api.get(url);
         const response = userSchema.safeParse(data);
+        // console.log(response);
         if(response.success) {
             return response.data;
         }
@@ -47,3 +49,39 @@ export async function getUser(){
     }
 }
 
+export async function getUsers(){
+    try {
+        const url = "/auth/users";
+        const { data } = await api.get(url);
+        console.log(data);
+        const response = userListSchema.safeParse(data);
+
+        if(response.success) {
+            return response.data;
+        }
+        
+        
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error || "Error al obtener los usuarios");
+        }
+    }
+}
+
+// With Pagination
+
+export async function getUsersWithPagination(page: number, limit: number) {
+    try {
+        const url = `/auth/users?limit=${limit}&offset=${page}`;
+        const { data } = await api.get(url);
+        const response = userListSchema.safeParse(data);
+
+        if (response.success) {
+            return response.data;
+        }
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error || "Error al obtener los usuarios");
+        }
+    }
+}

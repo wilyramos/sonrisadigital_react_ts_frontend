@@ -7,9 +7,8 @@ import LogiwView from "./views/auth/LogiwView";
 import RegisterView from "./views/auth/RegisterView";
 import AdminLayout from "./layouts/AdminLayout";
 import Dashboard from "./components/Admin/Dashboard";
-import Medicos from "./components/Admin/Medicos";
-
-
+import Medicos from "./components/Admin/Medic/Medicos";
+import Pacientes from "./components/Admin/Paciente/Pacientes";
 
 
 export default function App() {
@@ -38,6 +37,7 @@ export default function App() {
 
                         <Route path="/dashboard" element={<Dashboard />} />
                         <Route path="/admin/medicos" element={<Medicos />} />
+                        <Route path="/admin/pacientes" element={<Pacientes />} />
                         
 
                     </Route>
