@@ -1,3 +1,4 @@
+import { Description } from '@headlessui/react'
 import { z } from 'zod'
 
 /** Auth */
@@ -29,6 +30,8 @@ export const userSchema = authSchema.pick({
 export type User = z.infer<typeof userSchema>
 export type UserForm = Pick<User, 'name' | 'email' | 'phone'>
 
+
+
 /** User List */
 export type UserList = User[]
 
@@ -36,10 +39,14 @@ export const userListSchema = z.object({
     users: userSchema.array(),
     total: z.number(),
     totalPages: z.number(),
-    currentPage: z.number()
+    currentPage: z.number(),
 })
 
-export type UserListResponse = z.infer<typeof userListSchema>
+
+// Es un array de los objetos de userSchema
+// Para usarlo en la busqueda de usuarios
+export const userListArraySchema = z.array(userSchema) 
+export type UserListResponse = z.infer<typeof userListArraySchema>
 
 
 /** Medic */
@@ -73,3 +80,19 @@ export const pacienteSchema = z.object({
 
 export type Paciente = z.infer<typeof pacienteSchema>
 export type PacienteFormData = Pick<Paciente, 'name' | 'email' | 'password' | 'passwordConfirmation' | 'phone'>;
+
+
+/** Cita */
+
+export const citaSchema = z.object({
+    id: z.number(),
+    medicId: z.string(),
+    patientId: z.string(),
+    date: z.string(),
+    description: z.string(),
+    status: z.string(),
+})
+
+export type Cita = z.infer<typeof citaSchema>
+export type CitaFormData = Pick<Cita, 'medicId' | 'patientId' | 'date' | 'description'>;
+    

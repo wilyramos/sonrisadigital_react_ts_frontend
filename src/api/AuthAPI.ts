@@ -1,7 +1,7 @@
 import api from "@/lib/axios";
 import { isAxiosError } from "axios";
 import { AuthLoginForm } from "@/types/index";
-import { userSchema, userListSchema } from "@/types/index";
+import { userSchema, userListSchema, userListArraySchema } from "@/types/index";
 
 
 
@@ -83,5 +83,26 @@ export async function getUsersWithPagination(page: number, limit: number) {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error || "Error al obtener los usuarios");
         }
+    }
+}
+
+export async function searchUsers(search: string) {
+    try {
+        const url = `/auth/users/search?query=${search}`;
+        const { data } = await api.get(url);
+        // console.log(data);
+        const response = userListArraySchema.safeParse(data);
+
+        // console.log(response);
+        if (response.success) {
+            return response.data;
+        } else {
+            return [];
+        }
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error || "Error al buscar los usuarios");
+        }
+        return [];
     }
 }

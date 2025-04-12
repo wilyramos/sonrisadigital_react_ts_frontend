@@ -9,6 +9,7 @@ import AdminLayout from "./layouts/AdminLayout";
 import Dashboard from "./components/Admin/Dashboard";
 import Medicos from "./components/Admin/Medic/Medicos";
 import Pacientes from "./components/Admin/Paciente/Pacientes";
+import Citas from "./components/Admin/Cita/Citas";
 
 
 export default function App() {
@@ -38,7 +39,7 @@ export default function App() {
                         <Route path="/dashboard" element={<Dashboard />} />
                         <Route path="/admin/medicos" element={<Medicos />} />
                         <Route path="/admin/pacientes" element={<Pacientes />} />
-                        
+                        <Route path="/admin/citas" element={<Citas />} />
 
                     </Route>
                 </Routes>
