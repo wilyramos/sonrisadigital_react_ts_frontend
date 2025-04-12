@@ -51,7 +51,6 @@ export type UserListResponse = z.infer<typeof userListArraySchema>
 
 /** Medic */
 
-
 export const medicSchema = z.object({
     id: z.number(),
     name: z.string().min(1, { message: 'El nombre es requerido.' }),
@@ -66,6 +65,10 @@ export type MedicListResponse = {
     medicos: MedicList
     total: number
 }
+
+// para usar en la busqueda de medicos
+export const medicListArraySchema = z.array(medicSchema)
+export type MedicListArrayResponse = z.infer<typeof medicListArraySchema>
 
 /** Paciente */
 
@@ -86,13 +89,37 @@ export type PacienteFormData = Pick<Paciente, 'name' | 'email' | 'password' | 'p
 
 export const citaSchema = z.object({
     id: z.number(),
-    medicId: z.string(),
-    patientId: z.string(),
+    medicId: z.number(),
+    patientId: z.number(),
     date: z.string(),
     description: z.string(),
     status: z.string(),
+    createdAt: z.string(),
+    updatedAt: z.string(),
+    medic: z.object({
+        id: z.number(),
+        name: z.string(),
+        speciality: z.string(),
+        email: z.string(),
+        phone: z.string(),
+    }),
+    patient: z.object({
+        id: z.number(),
+        name: z.string(),
+        email: z.string(),
+        phone: z.string().nullable(),
+    }),
 })
+
+export const citaListSchema = z.array(citaSchema)
+export type CitaList = z.infer<typeof citaListSchema>
+
+export type CitaListResponse = {
+    citas: CitaList
+    total: number
+    totalPages: number
+    currentPage: number
+}
 
 export type Cita = z.infer<typeof citaSchema>
 export type CitaFormData = Pick<Cita, 'medicId' | 'patientId' | 'date' | 'description'>;
-    

@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { Dialog, Transition, type Description } from '@headlessui/react';
+import { Dialog, Transition } from '@headlessui/react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
@@ -18,8 +18,8 @@ export default function AddCitaModal() {
 
     const defaultValues = {
         date: new Date().toISOString().slice(0, 16), // Formato YYYY-MM-DDTHH:mm
-        patientId: '',
-        medicId: '',
+        patientId: 0,
+        medicId: 0,
         description: '',
     };
 
@@ -37,8 +37,10 @@ export default function AddCitaModal() {
         },
         onSuccess: (data) => {
             toast.success(data);
-            console.log(data);
-           
+            // console.log(data);
+            queryClient.invalidateQueries({ queryKey: ['citas'] }); // Invalida la caché de citas
+            reset();
+            closeModal();
         },
     });
 
@@ -76,7 +78,7 @@ export default function AddCitaModal() {
                             leaveFrom="opacity-100 scale-100"
                             leaveTo="opacity-0 scale-95"
                         >
-                            <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-3xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                            <Dialog.Panel className="w-full max-w-2xl transform overflow-hidden rounded-3xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                                 <div className="flex items-center justify-between">
                                     <Dialog.Title
                                         as="h3"
