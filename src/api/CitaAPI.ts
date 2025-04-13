@@ -22,16 +22,34 @@ export async function getCitas() {
     try {
         const url = "/cita/all";
         const { data } = await api.get(url);
-        console.log(data);
+        // console.log(data);
         const response = citaListSchema.safeParse(data);
         
-        console.log(response);
         if (response.success) {
             return response.data;
         }
     } catch (error) {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error || "Error al obtener las citas");
+        }
+    }
+}
+
+export async function getAppointmentByDate(date: string) {
+    try {
+        const url = `/cita/${date}`;
+        // console.log(url);
+        const { data } = await api.get(url);
+        // console.log(data);
+        const response = citaListSchema.safeParse(data);
+        // console.log(response);
+        
+        if (response.success) {
+            return response.data;
+        }
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error || "Error al obtener las citas por fecha");
         }
     }
 }

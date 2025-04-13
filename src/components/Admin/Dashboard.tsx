@@ -3,27 +3,61 @@ import {
     FaUserMd,
     FaCalendarCheck,
     FaClipboardList,
-    FaMoneyBillWave,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import CitasFiltering from "./Cita/CitasFiltering";
+import { getTodayDate } from "@/utils/formatDate";
+import { useQuery } from "@tanstack/react-query";
+import { getAppointmentByDate } from "@/api/CitaAPI";
+import { getUsers } from "@/api/AuthAPI";
+import { getMedics } from "@/api/MedicAPI";
+
 
 export default function Dashboard() {
+
+    // 
+
+    // stats para obtener la cantidad de citas de hoy
+
+    const today = getTodayDate();
+    const { data: citasHoy, isLoading: loadingCitas } = useQuery({
+        queryKey: ["citas", today],
+        queryFn: () => getAppointmentByDate(today),
+    });
+
+    // stats para obtener el numero de pacientes totales
+
+    const { data: pacientesTotales, isLoading: loadingPacientes } = useQuery({
+        queryKey: ["pacientes"],
+        queryFn: () => getUsers(),
+    });
+
+    
+    // stats para obtener el numero de odontologos totales
+    const { data: odontologosTotales, isLoading: loadingOdontologos } = useQuery({
+        queryKey: ["odontologos"],
+        queryFn: () => getMedics(),
+    });
+
+    const odontologosCount = odontologosTotales?.length || 0;
+
     const stats = [
         {
-            label: "Pacientes registrados",
-            value: 124,
+            label: "Pacientes totales",
+            value: pacientesTotales?.total || 0, 
             icon: <FaUserInjured className="text-blue-500 text-3xl" />,
             to: "/admin/pacientes",
         },
         {
             label: "Odontólogos",
-            value: 12,
+            value: odontologosCount,
+            0: odontologosTotales?.total || 0,
             icon: <FaUserMd className="text-green-500 text-3xl" />,
             to: "/admin/medicos",
         },
         {
             label: "Citas de hoy",
-            value: 8,
+            value: loadingCitas ? 0 : citasHoy?.length,
             icon: <FaCalendarCheck className="text-yellow-500 text-3xl" />,
             to: "/admin/citas",
         },
@@ -33,25 +67,13 @@ export default function Dashboard() {
             icon: <FaClipboardList className="text-purple-500 text-3xl" />,
             to: "/admin/tratamientos",
         },
-        {
-            label: "Ingresos del mes",
-            value: "$4,250",
-            icon: <FaMoneyBillWave className="text-emerald-500 text-3xl" />,
-            to: "/admin/finanzas",
-        },
-    ];
-
-    const agendaDelDia = [
-        { hora: "09:00", paciente: "Juan Pérez", odontologo: "Dra. López" },
-        { hora: "10:30", paciente: "Ana Díaz", odontologo: "Dr. Ruiz" },
-        { hora: "13:00", paciente: "Carlos Torres", odontologo: "Dra. Gómez" },
     ];
 
     return (
         <div>
             <h1 className="text-2xl font-bold text-gray-800 mb-6">Panel de Administración</h1>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
                 {stats.map((stat, index) => (
                     <Link
                         key={index}
@@ -69,24 +91,10 @@ export default function Dashboard() {
                 ))}
             </div>
 
-            {/* Agenda del Día */}
-            <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-200">
-                <h2 className="text-xl font-bold text-gray-800 mb-4">Agenda del día</h2>
-                <ul className="space-y-3">
-                    {agendaDelDia.map((cita, index) => (
-                        <li
-                            key={index}
-                            className="flex justify-between items-center border-b border-gray-100 pb-2"
-                        >
-                            <div>
-                                <p className="text-sm text-gray-700">
-                                    <span className="font-semibold">{cita.hora}</span> - {cita.paciente}
-                                </p>
-                                <p className="text-xs text-gray-500">{cita.odontologo}</p>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
+            <div className="mt-4">
+                <h2 className="text-xl font-bold text-gray-800 mb-4">Citas de hoy</h2>
+                <CitasFiltering
+                />
             </div>
         </div>
     );

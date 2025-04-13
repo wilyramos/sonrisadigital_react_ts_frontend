@@ -68,7 +68,7 @@ export default function CitaForm({ errors, register, setValue }: CitaFormProps) 
     const medicMutation = useMutation({
         mutationFn: searchMedics,
         onError: (error) => {
-            console.log(error)
+            // console.log(error)
             toast.error(error.message || 'Error al buscar el médico.')
         },
         onSuccess: (data) => {

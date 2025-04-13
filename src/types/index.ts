@@ -1,4 +1,3 @@
-import { Description } from '@headlessui/react'
 import { z } from 'zod'
 
 /** Auth */
@@ -113,6 +112,7 @@ export const citaSchema = z.object({
 
 export const citaListSchema = z.array(citaSchema)
 export type CitaList = z.infer<typeof citaListSchema>
+
 
 export type CitaListResponse = {
     citas: CitaList
