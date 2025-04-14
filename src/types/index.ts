@@ -123,3 +123,5 @@ export type CitaListResponse = {
 
 export type Cita = z.infer<typeof citaSchema>
 export type CitaFormData = Pick<Cita, 'medicId' | 'patientId' | 'date' | 'description'>;
+export const citaStatusSchema = z.enum(['pending', 'confirmed', 'completed', 'cancelled'])
+export type CitaStatus = z.infer<typeof citaStatusSchema>

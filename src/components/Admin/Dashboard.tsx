@@ -1,16 +1,13 @@
 import {
     FaUserInjured,
-    FaUserMd,
-    FaCalendarCheck,
+    // FaUserMd,
     FaClipboardList,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import CitasFiltering from "./Cita/CitasFiltering";
-import { getTodayDate } from "@/utils/formatDate";
 import { useQuery } from "@tanstack/react-query";
-import { getAppointmentByDate } from "@/api/CitaAPI";
 import { getUsers } from "@/api/AuthAPI";
-import { getMedics } from "@/api/MedicAPI";
+// import { getMedics } from "@/api/MedicAPI";
 
 
 export default function Dashboard() {
@@ -19,27 +16,21 @@ export default function Dashboard() {
 
     // stats para obtener la cantidad de citas de hoy
 
-    const today = getTodayDate();
-    const { data: citasHoy, isLoading: loadingCitas } = useQuery({
-        queryKey: ["citas", today],
-        queryFn: () => getAppointmentByDate(today),
-    });
 
     // stats para obtener el numero de pacientes totales
 
-    const { data: pacientesTotales, isLoading: loadingPacientes } = useQuery({
+    const { data: pacientesTotales } = useQuery({
         queryKey: ["pacientes"],
         queryFn: () => getUsers(),
     });
-
     
     // stats para obtener el numero de odontologos totales
-    const { data: odontologosTotales, isLoading: loadingOdontologos } = useQuery({
-        queryKey: ["odontologos"],
-        queryFn: () => getMedics(),
-    });
+    // const { data: odontologosTotales } = useQuery({
+    //     queryKey: ["odontologos"],
+    //     queryFn: () => getMedics(),
+    // });
 
-    const odontologosCount = odontologosTotales?.length || 0;
+    // const odontologosCount = odontologosTotales?.length || 0;
 
     const stats = [
         {
@@ -47,19 +38,6 @@ export default function Dashboard() {
             value: pacientesTotales?.total || 0, 
             icon: <FaUserInjured className="text-blue-500 text-3xl" />,
             to: "/admin/pacientes",
-        },
-        {
-            label: "Odontólogos",
-            value: odontologosCount,
-            0: odontologosTotales?.total || 0,
-            icon: <FaUserMd className="text-green-500 text-3xl" />,
-            to: "/admin/medicos",
-        },
-        {
-            label: "Citas de hoy",
-            value: loadingCitas ? 0 : citasHoy?.length,
-            icon: <FaCalendarCheck className="text-yellow-500 text-3xl" />,
-            to: "/admin/citas",
         },
         {
             label: "Tratamientos activos",

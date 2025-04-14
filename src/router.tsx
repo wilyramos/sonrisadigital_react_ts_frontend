@@ -10,11 +10,12 @@ import Dashboard from "./components/Admin/Dashboard";
 import Medicos from "./components/Admin/Medic/Medicos";
 import Pacientes from "./components/Admin/Paciente/Pacientes";
 import Citas from "./components/Admin/Cita/Citas";
+import CitaDetailsView from "./components/Admin/Cita/CitaDetailsView";
 
 
 export default function App() {
     return (
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-6xl mx-auto">
             <Router>
                 <Routes>
                     <Route element={<PublicLayout />}>
@@ -40,6 +41,7 @@ export default function App() {
                         <Route path="/admin/medicos" element={<Medicos />} />
                         <Route path="/admin/pacientes" element={<Pacientes />} />
                         <Route path="/admin/citas" element={<Citas />} />
+                        <Route path="/citas/:citaId" element={<CitaDetailsView />} />
 
                     </Route>
                 </Routes>
