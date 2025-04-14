@@ -2,11 +2,10 @@ import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getCitaById, updateStatusCita } from '@/api/CitaAPI';
 import type { CitaStatus } from '@/types/index';
 import { statusTranslations } from '@/locales/es';
-
 
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
@@ -14,6 +13,7 @@ import { toast } from 'react-toastify';
 
 export default function CitaDetailsModal() {
 
+    const queryClient = useQueryClient();
     const navigate = useNavigate();
     const location = useLocation();
     const queryparams = new URLSearchParams(location.search);
@@ -37,6 +37,7 @@ export default function CitaDetailsModal() {
         mutationFn: updateStatusCita,
         onSuccess: (data) => {
             toast.success(data)
+            queryClient.invalidateQueries({ queryKey: ['citas'] });
         },
         onError: (error) => {
             if (error instanceof Error) {

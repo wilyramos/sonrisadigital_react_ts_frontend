@@ -8,13 +8,30 @@ import { Link } from "react-router-dom";
 import { Menu, Transition } from '@headlessui/react'
 import { EllipsisVerticalIcon } from '@heroicons/react/24/outline';
 import { Fragment } from 'react';
-import { FaEye, FaTrashAlt } from 'react-icons/fa';
+import { FaCalendar, FaClock, FaEye, FaTrashAlt } from 'react-icons/fa';
 import { useNavigate } from "react-router-dom";
 import CitaDetailsModal from "./CitaDetailsModal";
+import { statusTranslations } from "@/locales/es";
+import { formatTimeOnly } from "@/utils/formatDate";
+
+import { FaA } from "react-icons/fa6";
 
 
+interface statusColors {
+    [key: string]: string;
+}
 
 export default function CitasFiltering() {
+
+
+
+    const statusColors: statusColors = {
+        "pending": "bg-yellow-50 text-yellow-700 border border-yellow-200 rounded-lg shadow-sm px-2 font-bold",
+        "confirmed": "bg-green-50 text-green-700 border border-green-200 rounded-lg shadow-sm px-2 font-bold",
+        "completed": "bg-blue-50 text-blue-700 border border-blue-200 rounded-lg shadow-sm px-2 font-bold",
+        "cancelled": "bg-red-50 text-red-700 border border-red-200 rounded-lg shadow-sm px-2 font-bold",
+    };
+
     const navigate = useNavigate();
 
     const initialDate = getTodayDate();
@@ -80,8 +97,6 @@ export default function CitasFiltering() {
                         </div>
                     )}
 
-                    {/* Renderizado por hora */}
-
                     {citasData && citasData.length > 0 && (
                         <div className="space-y-4 max-h-[800px] overflow-y-auto">
                             {hours.map((hour) => {
@@ -101,28 +116,29 @@ export default function CitasFiltering() {
                                                 {citasEnHora.map((cita) => (
                                                     <div
                                                         key={cita.id}
-                                                        className="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm hover:shadow-md transition-all duration-200"
+                                                        className=" grid grid-cols-4 gap-2 border border-gray-200 rounded-2xl p-4 shadow-sm hover:shadow-md transition-all duration-200"
                                                     >
-                                                        <div className="flex items-center gap-4 mb-2">
-                                                            <div className="h-10 w-10 rounded-full bg-lime-100 text-lime-600 flex items-center justify-center text-sm font-bold shadow-inner">
-                                                                {cita.id}
-                                                            </div>
-
+                                                        <div className="col-span-3 flex items-center mb-2">
                                                             <Link to={`/citas/${cita.id}`}>
                                                                 <div>
-                                                                    <p className="text-sm font-semibold text-gray-800">{cita.description}</p>
-                                                                    <p className="text-xs text-gray-500 flex items-center gap-1">
-                                                                        <FiClock className="text-lime-500" />
-                                                                        {new Date(cita.date).toLocaleTimeString([], {
-                                                                            hour: "2-digit",
-                                                                            minute: "2-digit",
-                                                                        })}
+                                                                    <p className="inline items-center justify-center gap-2 text-gray-800 px-2 text-sm hover:text-lime-600">
+                                                                        {cita.description && cita.description.length > 50
+                                                                            ? `${cita.description.slice(0, 50)}...`
+                                                                            : cita.description}
                                                                     </p>
+
                                                                 </div>
                                                             </Link>
                                                         </div>
 
-                                                        <div className="text-sm text-gray-600 space-y-1">
+                                                        <div className="inline-flex items-center space-x-2 bg-gray-100 p-1 rounded-xl shadow-sm">
+                                                            <FaClock className="text-gray-500" />
+                                                            <span className="text-xs font-medium text-gray-700">
+                                                                {formatTimeOnly(cita.date)}
+                                                            </span>
+                                                        </div>
+
+                                                        <div className="col-span-3 text-sm">
                                                             <p className="flex items-center gap-2">
                                                                 <FiUser className="text-gray-400" />
                                                                 <span className="font-medium">Paciente:</span> {cita.patient.name}
@@ -132,9 +148,18 @@ export default function CitasFiltering() {
                                                                 <FiUserCheck className="text-gray-400" />
                                                                 <span className="font-medium">Médico:</span> {cita.medic.name}
                                                             </p>
+                                                            <p className="flex items-center gap-2">
+                                                                <FiUserCheck className="text-gray-400" />
+                                                                <span className="font-medium">Estado:</span>
+                                                                <span className={statusColors[cita.status]}>{statusTranslations[cita.status]}</span>
+
+                                                            </p>
                                                         </div>
 
-                                                        <div className="flex justify-end mt-4">
+                                                        
+
+
+                                                        <div className="grid place-items-end">
                                                             <Menu as="div" className="relative flex-none">
                                                                 <Menu.Button className="-m-2.5 block p-2.5 text-gray-500 hover:text-gray-900">
                                                                     <span className="sr-only">opciones</span>
