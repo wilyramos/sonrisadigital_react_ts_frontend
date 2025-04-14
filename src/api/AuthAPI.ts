@@ -53,7 +53,7 @@ export async function getUsers(){
     try {
         const url = "/auth/users";
         const { data } = await api.get(url);
-        console.log(data);
+        // console.log(data);
         const response = userListSchema.safeParse(data);
 
         if(response.success) {
