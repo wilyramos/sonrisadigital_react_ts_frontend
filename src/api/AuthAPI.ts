@@ -5,7 +5,6 @@ import { userSchema, userListSchema, userListArraySchema } from "@/types/index";
 
 
 
-
 export async function registerUser(formData: AuthLoginForm) {
     
     try {
@@ -27,8 +26,12 @@ export async function authenticateUser(formData: AuthLoginForm) {
         localStorage.setItem("AUTH_TOKEN_SONRISADIGITAL", data);
         return data;
     } catch (error) {
+
+        console.log(error);
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error || "Error al iniciar sesión");
+        } else {
+            throw new Error("Error al iniciar sesión");
         }
     }
 }

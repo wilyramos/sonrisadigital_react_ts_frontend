@@ -30,11 +30,11 @@ export default function ModernLoginView() {
         onError: (error) => {
             setIsLoading(false);
             toast.dismiss();
-            toast.error(error.message);
+            toast.error(error.message || 'Error al iniciar sesión');
         },
         onSuccess: () => {
             setIsLoading(false);
-            toast.dismiss();
+            toast.success('Sesión iniciada con éxito!');
             navigate('/dashboard');
         }
     });

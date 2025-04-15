@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { FaPlus, FaSortDown, FaSortUp } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
 import AddCitaModal from "./AddCitaModal";
 import { useQuery } from "@tanstack/react-query";
 import { getCitas } from "@/api/CitaAPI";

@@ -8,13 +8,11 @@ import { Link } from "react-router-dom";
 import { Menu, Transition } from '@headlessui/react'
 import { EllipsisVerticalIcon } from '@heroicons/react/24/outline';
 import { Fragment } from 'react';
-import { FaCalendar, FaClock, FaEye, FaTrashAlt } from 'react-icons/fa';
+import { FaClock, FaEye, FaTrashAlt } from 'react-icons/fa';
 import { useNavigate } from "react-router-dom";
 import CitaDetailsModal from "./CitaDetailsModal";
 import { statusTranslations } from "@/locales/es";
 import { formatTimeOnly } from "@/utils/formatDate";
-
-import { FaA } from "react-icons/fa6";
 
 
 interface statusColors {
@@ -22,8 +20,6 @@ interface statusColors {
 }
 
 export default function CitasFiltering() {
-
-
 
     const statusColors: statusColors = {
         "pending": "bg-yellow-50 text-yellow-700 border border-yellow-200 rounded-lg shadow-sm px-2 font-bold",
@@ -131,14 +127,14 @@ export default function CitasFiltering() {
                                                             </Link>
                                                         </div>
 
-                                                        <div className="inline-flex items-center space-x-2 bg-gray-100 p-1 rounded-xl shadow-sm">
+                                                        <div className="inline-flex items-center space-x-2 bg-gray-100 p-1 rounded-full shadow-sm">
                                                             <FaClock className="text-gray-500" />
                                                             <span className="text-xs font-medium text-gray-700">
                                                                 {formatTimeOnly(cita.date)}
                                                             </span>
                                                         </div>
 
-                                                        <div className="col-span-3 text-sm">
+                                                        <div className="col-span-3 text-xs">
                                                             <p className="flex items-center gap-2">
                                                                 <FiUser className="text-gray-400" />
                                                                 <span className="font-medium">Paciente:</span> {cita.patient.name}
