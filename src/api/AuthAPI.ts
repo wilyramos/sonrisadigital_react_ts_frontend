@@ -10,10 +10,11 @@ export async function registerUser(formData: AuthLoginForm) {
     try {
         const url = "/auth/create-account";
         const { data } = await api.post<string>(url, formData);
+        console.log(data);
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
-            throw new Error(error.response.data.error || "Error al registrar usuario");
+            throw new Error(error.response.data.message || "Error al registrar usuario");
         }
     }
 }
