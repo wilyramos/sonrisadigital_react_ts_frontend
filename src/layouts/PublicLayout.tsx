@@ -1,7 +1,8 @@
-import { ToastContainer } from "react-toastify";
 import Navigation from "../components/Nav/Navigation";
 import { Outlet } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
+import { Toaster } from 'sonner'
+
 
 
 export default function PublicLayout() {
@@ -20,18 +21,13 @@ export default function PublicLayout() {
                     </div>
                 </footer>
             </div>
-            <ToastContainer
+            <Toaster                
                 position="top-right"
-                autoClose={3000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
+                richColors 
+
             />
+
+            
         </>
     )
 }

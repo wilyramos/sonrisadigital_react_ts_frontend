@@ -18,7 +18,6 @@ export default function CitaDetailsModal() {
     const location = useLocation();
     const queryparams = new URLSearchParams(location.search);
     const citaId = queryparams.get('viewCita');
-    console.log(citaId);
     const show = !!citaId;
 
 

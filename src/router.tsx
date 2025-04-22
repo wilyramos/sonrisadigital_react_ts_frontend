@@ -15,37 +15,35 @@ import CitaDetailsView from "./components/Admin/Cita/CitaDetailsView";
 
 export default function App() {
     return (
-        <div className="max-w-6xl mx-auto">
-            <Router>
-                <Routes>
-                    <Route element={<PublicLayout />}>
-                        
-                        {/* Rutas publicas */}
-                        <Route path="/" element={<Home />} index />
-                        <Route path="/login" element={<LogiwView />} />
-                        <Route path="/register" element={<RegisterView />} />
-                        <Route path="/forgot-password" element={<h1>Forgot Password</h1>} />
+        <Router>
+            <Routes>
+                <Route element={<PublicLayout />}>
 
-                       
-                    </Route>
+                    {/* Rutas publicas */}
+                    <Route path="/" element={<Home />} index />
+                    <Route path="/login" element={<LogiwView />} />
+                    <Route path="/register" element={<RegisterView />} />
+                    <Route path="/forgot-password" element={<h1>Forgot Password</h1>} />
 
-                    <Route element={<PacienteLayout />}>
-                        {/* Rutas privadas */}
-                        <Route path="/profile" element={<h1>Profile</h1>} />
-                        <Route path="/settings" element={<h1>Settings</h1>} />
-                    </Route>
 
-                    <Route element={<AdminLayout />}>
+                </Route>
 
-                        <Route path="/dashboard" element={<Dashboard />} />
-                        <Route path="/admin/medicos" element={<Medicos />} />
-                        <Route path="/admin/pacientes" element={<Pacientes />} />
-                        <Route path="/admin/citas" element={<Citas />} />
-                        <Route path="/citas/:citaId" element={<CitaDetailsView />} />
+                <Route element={<PacienteLayout />}>
+                    {/* Rutas privadas */}
+                    <Route path="/profile" element={<h1>Profile</h1>} />
+                    <Route path="/settings" element={<h1>Settings</h1>} />
+                </Route>
 
-                    </Route>
-                </Routes>
-            </Router>
-        </div>
+                <Route element={<AdminLayout />}>
+
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/medicos" element={<Medicos />} />
+                    <Route path="/pacientes" element={<Pacientes />} />
+                    <Route path="/citas" element={<Citas />} />
+                    <Route path="/citas/:citaId" element={<CitaDetailsView />} />
+
+                </Route>
+            </Routes>
+        </Router>
     );
 }
