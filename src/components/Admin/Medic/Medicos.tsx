@@ -20,7 +20,7 @@ export default function Medicos() {
         retry: 1,
     });
 
-    // mutation para obtener los médicos
+    // mutation para obtener los médicos buscados
     const medicMutation = useMutation({
         mutationFn: searchMedics,
         onError: (error) => {

@@ -2,7 +2,7 @@ import type { MedicList } from "@/types/index";
 import MedicCard from "./MedicCard"; // Importa el nuevo componente MedicCard
 
 type MedicsListProps = {
-    medics: MedicList;
+    medics?: MedicList;
 };
 
 export default function MedicsList({ medics }: MedicsListProps) {
