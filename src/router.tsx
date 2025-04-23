@@ -6,7 +6,7 @@ import Home from "./views/home";
 import LogiwView from "./views/auth/LogiwView";
 import RegisterView from "./views/auth/RegisterView";
 import AdminLayout from "./layouts/AdminLayout";
-import Dashboard from "./components/Admin/Dashboard";
+import Dashboard from "./components/Admin/Dashboard/Dashboard";
 import Medicos from "./components/Admin/Medic/Medicos";
 import Pacientes from "./components/Admin/Paciente/Pacientes";
 import Citas from "./components/Admin/Cita/Citas";

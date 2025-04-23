@@ -23,11 +23,8 @@ export default function PublicLayout() {
             </div>
             <Toaster                
                 position="top-right"
-                richColors 
-
-            />
-
-            
+                richColors
+            />            
         </>
     )
 }

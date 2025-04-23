@@ -3,10 +3,11 @@ import { Navigate, Outlet } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "@/hooks/useAuth";
 import { ClipLoader } from "react-spinners";
-import LayourSidebar from "@/layouts/LayoutSidebar";
+import AdminSidebar from "@/components/Sidebar/AdminSidebar";
+import Logo from "@/components/Logo";
+import { Link } from "react-router-dom";
 
 export default function AdminLayout() {
-
     const { user, isError, isLoading } = useAuth();
 
     if (isError) {
@@ -15,27 +16,31 @@ export default function AdminLayout() {
 
     return (
         <>
-            <LayourSidebar >
-                {
-                    isLoading ? (
-                        <>
-                            <div className="flex items-center justify-center w-full p-20">
-                                <ClipLoader color="#36d7b7" size={50} />
-                            </div>
-                        </>
+            <div className="flex flex-col md:flex-row h-screen">
 
+                <aside className="hidden md:block">
+                    <AdminSidebar user={user} />
+                </aside>
+
+                <div className=" flex flex-col md:hidden justify-center items-center">
+                <div className="w-64 flex items-center pt-4">
+                    <Link to="/dashboard" className="focus:outline-none">
+                        <Logo />
+                    </Link>
+                </div>
+                </div>   
+
+                <main className="flex-1 p-4 overflow-y-auto">
+                    {isLoading ? (
+                        <div className="flex items-center justify-center h-full">
+                            <ClipLoader color="#000" size={50} />
+                        </div>
                     ) : (
-                        user?.role === 'admin' ? (
-                            <div className="flex flex-col w-full h-full p-6 items-center">
-                                <Outlet />
-                            </div>
+                        <Outlet />
+                    )}
+                </main>
+            </div>
 
-                        ) : (
-                            <Navigate to="/login" />
-                        )
-                    )
-                }
-            </LayourSidebar>
             <ToastContainer
                 position="top-right"
                 autoClose={3000}

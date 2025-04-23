@@ -29,8 +29,7 @@ export default function AddMedicModal() {
         },
         onSuccess: (data) => {
             toast.success(data);
-            queryClient.invalidateQueries({ queryKey: ['medicos'] }); // Invalida la caché de médicos
-            // console.log(data);
+            queryClient.invalidateQueries({ queryKey: ['medicos'] }); 
             navigate(location.pathname, { replace: true }); // Cierra el modal
             reset();
         },
@@ -56,7 +55,7 @@ export default function AddMedicModal() {
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                 >
-                    <div className="fixed inset-0 bg-black/20 transition-opacity"  />
+                    <div className="fixed inset-0 bg-black/50 transition-opacity"  />
                 </Transition.Child>
 
                 <div className="fixed inset-0 overflow-y-auto">
@@ -88,7 +87,7 @@ export default function AddMedicModal() {
                                     </button>
                                 </div>
 
-                                <div className="mt-4">
+                                <div className="">
                                     <p className="text-sm text-gray-500">
                                         Completa el siguiente formulario para crear un nuevo médico.
                                     </p>
@@ -106,14 +105,14 @@ export default function AddMedicModal() {
                                         <div className="mt-6 flex justify-end gap-2">
                                             <button
                                                 type="button"
-                                                className="inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                                className="bg-gray-50 text-gray-800 rounded-lg border border-gray-300 px-4 py-2 hover:bg-gray-100 transition duration-150"
                                                 onClick={closeModal}
                                             >
                                                 Cancelar
                                             </button>
                                             <button
                                                 type="submit"
-                                                className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                                className="bg-teal-500 text-white rounded-lg px-4 py-2 hover:bg-teal-600 transition duration-150"
                                             >
                                                 Crear
                                             </button>
