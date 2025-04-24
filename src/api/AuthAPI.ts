@@ -22,17 +22,15 @@ export async function registerUser(formData: AuthLoginForm) {
 export async function authenticateUser(formData: AuthLoginForm) {
     try {
         const url = "/auth/login";
-        const { data } = await api.post<string>(url, formData);
+        const { data } = await api.post(url, formData);
         
         localStorage.setItem("AUTH_TOKEN_SONRISADIGITAL", data);
         return data;
     } catch (error) {
-
+        // console.log(error);
         if (isAxiosError(error) && error.response) {
-            throw new Error(error.response.data.error || "Error al iniciar sesión");
-        } else {
-            throw new Error("Error al iniciar sesión");
-        }
+            throw new Error(error.response.data.message);
+        }        
     }
 }
 

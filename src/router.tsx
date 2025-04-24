@@ -11,6 +11,7 @@ import Medicos from "./components/Admin/Medic/Medicos";
 import Pacientes from "./components/Admin/Paciente/Pacientes";
 import Citas from "./components/Admin/Cita/Citas";
 import CitaDetailsView from "./components/Admin/Cita/CitaDetailsView";
+import CitasCalendar from "./components/Admin/Cita/CitasCalendar";
 
 
 export default function App() {
@@ -40,6 +41,7 @@ export default function App() {
                     <Route path="/medicos" element={<Medicos />} />
                     <Route path="/pacientes" element={<Pacientes />} />
                     <Route path="/citas" element={<Citas />} />
+                    <Route path="/calendar" element={<CitasCalendar />} />
                     <Route path="/citas/:citaId" element={<CitaDetailsView />} />
 
                 </Route>

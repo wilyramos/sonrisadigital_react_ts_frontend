@@ -4,10 +4,10 @@ import AddCitaModal from "./AddCitaModal";
 import { useQuery } from "@tanstack/react-query";
 import { getCitas } from "@/api/CitaAPI";
 import ClipLoader from "react-spinners/ClipLoader";
-import CitasList from "./CitasList";
+import Calendar from "./Calendar";
 
 
-export default function Citas() {
+export default function CitasCalendar() {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -17,17 +17,21 @@ export default function Citas() {
         retry: 1,
     });
 
+    
     if (isLoading) return <div className="text-center"><ClipLoader color="#10b981" size={40} /></div>;
     if (isError) return <div className="text-red-500 text-center">Error al cargar las citas.</div>;
 
 
     return (
-        <div className="p-1">
-            <div className="container mx-auto">
+
+
+        <>
+
+            <div className="p-8 space-y-8">
                 <div className="flex justify-between items-center mb-2">
-                    <h1 className="text-2xl font-semibold text-lime-500">Gestión de Citas</h1>
-                    <Link to="/citas/all" className="text-gray-500 hover:text-gray-700 transition duration-150">
-                        <span className="text-sm">Ver todas</span>
+                    <h1 className="text-3xl font-bold text-gray-800 mb-1">Calendario de Citas</h1>
+                    <Link to="/citas" className="text-gray-500 hover:text-gray-700 transition duration-150">
+                        <span className="text-sm">Ver listado de citas</span>
                     </Link>
                     <button
                         onClick={() => navigate(location.pathname + `?newCita=true`)}
@@ -36,32 +40,13 @@ export default function Citas() {
                         <FaPlus className="mr-2" /> Nueva Cita
                     </button>
                 </div>
-
-                <div>
-
-                    {citasData && citasData.length === 0 && (
-                        <div className="text-center text-gray-500">No hay citas disponibles.</div>
-                    )}
-                    {citasData && citasData.length > 0 && (
-
-
-                        <CitasList
-                            citas={citasData}
-                        />
-                    )}
-
-
-                    {citasData && citasData.length > 0 && (
-                        <div className="text-center text-gray-500">Total de citas: {citasData.length}</div>
-                    )}
+                <Calendar />
+                <div className="flex justify-center items-center mt-4">
+                    <div className="text-gray-500 text-sm">Citas disponibles: {citasData?.length}</div>
                 </div>
-
-
-
-
             </div>
             <AddCitaModal />
-        </div>
+        </>
     );
 }
 

@@ -14,6 +14,11 @@ export default function AdminLayout() {
         return <Navigate to="/login" />;
     }
 
+    // navigate to login if user is not admin
+    if (user && user.role !== "admin") {
+        return <Navigate to="/profile" />;
+    }
+
     return (
         <>
             <div className="flex flex-col md:flex-row h-screen">

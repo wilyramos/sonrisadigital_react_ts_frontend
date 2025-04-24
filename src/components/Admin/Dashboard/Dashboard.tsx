@@ -2,7 +2,7 @@ import { CalendarDays, Users, CheckCircle, XCircle, Clock } from "lucide-react";
 
 export default function Dashboard() {
     return (
-        <div className="p-8 space-y-8"> {/* Mayor padding y espaciado */}
+        <div className="p-8 space-y-8"> 
             <div>
                 <h1 className="text-3xl font-bold text-gray-800 mb-1">Panel de Citas</h1>
                 <p className="text-gray-600 text-sm">Resumen general y gestión de citas.</p>

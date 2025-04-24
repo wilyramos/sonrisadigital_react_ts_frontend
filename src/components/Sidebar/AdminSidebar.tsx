@@ -10,7 +10,7 @@ interface AdminSidebarProps {
 
 const navItems = [
     { label: "Inicio", icon: <Home size={18} />, path: "/dashboard" },
-    { label: "Citas", icon: <Calendar size={18} />, path: "/citas" },
+    { label: "Citas", icon: <Calendar size={18} />, path: "/calendar" },
     { label: "Pacientes", icon: <Users size={18} />, path: "/pacientes" },
     { label: "Odontólogos", icon: <Users size={18} />, path: "/medicos" },
     { label: "Configuración", icon: <Settings size={18} />, path: "/configuracion" },
