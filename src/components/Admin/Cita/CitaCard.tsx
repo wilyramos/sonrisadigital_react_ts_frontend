@@ -23,17 +23,20 @@ export default function CitaCard({ cita, statusColors }: CitaCardProps) {
     const navigate = useNavigate();
 
     return (
-        <div className="grid grid-cols-5 gap-2 border border-gray-200 rounded-2xl p-4 shadow-sm hover:shadow-md transition-all duration-200 text-center">
-            <div className="col-span-3 flex items-center mb-2">
-                <Link to={`/citas/${cita.id}`}>
-                    <div>
-                        <p className="inline items-center justify-center gap-2 text-gray-800 px-2 text-sm hover:text-lime-600">
-                            {cita.description && cita.description.length > 50
-                                ? `${cita.description.slice(0, 50)}...`
-                                : cita.description}
-                        </p>
-                    </div>
-                </Link>
+
+        <div className="grid grid-cols-5 gap-2 border border-gray-200 rounded-xl py-2 px-4 shadow-xl hover:shadow-2xl transition-all duration-200 text-center">
+
+            <div className="col-span-3">
+                <button
+                    onClick={() => navigate(`/dashboard?viewCita=${cita.id}`)}
+                >
+                    <p className="text-sm font-semibold text-blue-600 hover:underline line-clamp-2 text-left uppercase cursor-pointer">
+                        {cita.description && cita.description.length > 50
+                            ? `${cita.description.slice(0, 50)}...`
+                            : cita.description
+                        }
+                    </p>
+                </button>
             </div>
 
             <div className="col-span-2 inline-flex items-center bg-gray-100 text-center justify-center rounded-lg border border-gray-300 shadow-sm px-1 font-extrabold text-sm">

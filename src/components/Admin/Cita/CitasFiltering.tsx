@@ -39,11 +39,11 @@ export default function CitasFiltering() {
 
     return (
         <>
-            <div className=""> {/* Eliminamos justify-center */}
-                <section className="w-full container grid grid-cols-1 md:grid-cols-4 gap-4 p-4 shadow-xl rounded-xl border ">
+            <div className=""> 
+                <section className="w-full container grid grid-cols-1 md:grid-cols-4 gap-2 p-2 shadow-xl rounded-xl border border-gray-200">
                     {/* Filtros */}
-                    <aside className="md:col-span-1 border-r-2 border-gray-400 p-2">
-                        <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                    <aside className="md:col-span-1 border-r-2 border-gray-300 p-2">
+                        <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
                             <FiCalendar className="text-lime-600" />
                             Filtrar Citas
                         </h2>
@@ -59,8 +59,8 @@ export default function CitasFiltering() {
                     </aside>
 
                     <div className="md:col-span-3">
-                        <h1 className="text-2xl text-gray-500 mb-4">
-                            {selectedData ? `Citas del ${selectedData}` : "Selecciona una fecha"}
+                        <h1 className="text-xl font-bold text-gray-800 mb-4 text-end pt-2">
+                            {selectedData ? `Citas para el ${selectedData}` : "Selecciona una fecha"}
                         </h1>
 
                         {isLoading && (
@@ -90,9 +90,9 @@ export default function CitasFiltering() {
 
                                     return (
                                         <div key={hour}>
-                                            <div className="flex gap-2 font-extrabold text-teal-600 mb-2 border-b border-gray-200 pb-1">
-                                                <FiClock className="text-black" />
-                                                {hour}
+                                            <div className="flex gap-2 font-bold text-gray-700 border-b border-gray-200 pb-1 items-center text-center">
+                                                <FiClock className="text-gray-500" />
+                                                <span>{hour}</span>
                                             </div>
 
                                             {citasEnHora.length > 0 ? (
@@ -102,7 +102,7 @@ export default function CitasFiltering() {
                                                     ))}
                                                 </div>
                                             ) : (
-                                                <p className="text-gray-400 italic">Sin citas en este horario.</p> 
+                                                <p className="text-gray-400 italic text-xs">Sin citas en este horario.</p> 
                                             )}
                                         </div>
                                     );

@@ -1,24 +1,34 @@
-export const formatDate = (dateString: string): string => {
+export function formatDate(isoString: string): string {
+    const date = new Date(isoString);
+    
+    const formatter = new Intl.DateTimeFormat('es-PE', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+        hour12: true,
+        timeZone: 'America/Lima', 
+    });
+    return formatter.format(date);
+}
+
+export const formatDateLocal = (dateString: string): string => {
     const date = new Date(dateString);
     const options: Intl.DateTimeFormatOptions = {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: true,
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
     };
-    return date.toLocaleString('es-ES', options);
-};
+    return date.toLocaleString('es-PE', options).replace(/\//g, '-'); // Change 'es-ES' to 'es-PE'
+  };
 
 export const formatDateOnly = (dateString: string): string => {
     const date = new Date(dateString);
     const options: Intl.DateTimeFormatOptions = {
         year: 'numeric',
-        month: 'long',
-        day: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
     };
-    return date.toLocaleDateString('es-ES', options);
+    return date.toLocaleDateString('es-PE', options).replace(/\//g, '-'); // Change 'es-ES' to 'es-PE'
 }
 
 export const formatTimeOnly = (dateString: string): string => {
