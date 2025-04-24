@@ -12,6 +12,7 @@ import Pacientes from "./components/Admin/Paciente/Pacientes";
 import Citas from "./components/Admin/Cita/Citas";
 import CitaDetailsView from "./components/Admin/Cita/CitaDetailsView";
 import CitasCalendar from "./components/Admin/Cita/CitasCalendar";
+import PacientesDetailsView from "./components/Admin/Paciente/PacientesDetailsView";
 
 
 export default function App() {
@@ -40,6 +41,7 @@ export default function App() {
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/medicos" element={<Medicos />} />
                     <Route path="/pacientes" element={<Pacientes />} />
+                    <Route path="/pacientes/:pacienteId" element={<PacientesDetailsView />} />
                     <Route path="/citas" element={<Citas />} />
                     <Route path="/calendar" element={<CitasCalendar />} />
                     <Route path="/citas/:citaId" element={<CitaDetailsView />} />
