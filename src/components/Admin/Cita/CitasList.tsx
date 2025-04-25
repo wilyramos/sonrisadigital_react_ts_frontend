@@ -5,7 +5,7 @@ import { formatDateOnly, formatTimeOnly } from '@/utils/formatDate';
 import type { CitaList } from "@/types/index";
 
 type CitasListProps = {
-    citas: CitaList;
+    citas?: CitaList;
 };
 
 export default function CitasList({ citas }: CitasListProps) {

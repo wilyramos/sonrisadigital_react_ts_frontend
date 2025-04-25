@@ -36,6 +36,24 @@ export async function getCitas() {
     }
 }
 
+export async function getCitasSearch(searchTerm: string) {
+    try {
+        const url = `/cita/citas/search?query=${searchTerm}`;
+        const { data } = await api.get(url);
+        console.log(data);
+    
+        const response = citaListSchema.safeParse(data);
+        
+        if (response.success) {
+            return response.data;
+        }
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.message || "Error al obtener las citas por busqueda");
+        }
+    }
+}
+
 export async function getAppointmentsByDate(date: string) {
     try {
         const url = `/cita/citas/${date}`;

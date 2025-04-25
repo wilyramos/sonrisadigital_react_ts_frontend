@@ -5,9 +5,54 @@ import { useQuery } from "@tanstack/react-query";
 import { getCitas } from "@/api/CitaAPI";
 import ClipLoader from "react-spinners/ClipLoader";
 import CitasList from "./CitasList";
-
+import { FaSearch } from "react-icons/fa";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { useMutation } from "@tanstack/react-query";
+import { getCitasSearch } from "@/api/CitaAPI";
+import type { CitaList } from "@/types/index"; // Asegúrate de que la ruta sea correcta
 
 export default function Citas() {
+
+    // Search 
+    const [searchTerm, setSearchTerm] = useState('');
+    const [searchCitaResults, setSearchCitaResults] = useState<CitaList | null>();
+    
+
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(event.target.value);
+    };
+
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            handleSearch();
+        }
+    };
+
+    const handleSearch = () => {
+
+        if (searchTerm.trim()) {
+            
+            console.log("Buscando citas por:", searchTerm);
+            citasMutation.mutate(searchTerm.trim());
+        } else {
+            // Si no hay término de búsqueda, puedes mostrar un mensaje o realizar otra acción
+            console.log("Por favor, ingresa un término de búsqueda.");
+        }
+        
+    };
+    
+    //Mutation for get citas
+    const citasMutation = useMutation({
+        mutationFn: getCitasSearch,
+        onError: (error) => {
+            toast.error(error.message || 'Error al cargar las citas.');
+        },
+        onSuccess: (data) => {
+            setSearchCitaResults(data);
+        },
+    })
+
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -17,18 +62,19 @@ export default function Citas() {
         retry: 1,
     });
 
+    // Show list of citas
+    const showcitasList = searchCitaResults ? searchCitaResults : citasData;
+
     if (isLoading) return <div className="text-center"><ClipLoader color="#10b981" size={40} /></div>;
     if (isError) return <div className="text-red-500 text-center">Error al cargar las citas.</div>;
 
 
     return (
-        <div className="p-1">
-            <div className="container mx-auto">
-                <div className="flex justify-between items-center mb-2">
-                    <h1 className="text-2xl font-semibold text-lime-500">Gestión de Citas</h1>
-                    <Link to="/citas/all" className="text-gray-500 hover:text-gray-700 transition duration-150">
-                        <span className="text-sm">Ver todas</span>
-                    </Link>
+
+        <>
+            <div className="p-10">
+                <div className="flex justify-between items-center mb-8">
+                    <h1 className="text-3xl font-semibold text-gray-800">Listado de Citas</h1>
                     <button
                         onClick={() => navigate(location.pathname + `?newCita=true`)}
                         className="flex items-center px-4 py-2 bg-teal-500 text-white rounded-md shadow-sm hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 transition duration-150"
@@ -37,31 +83,33 @@ export default function Citas() {
                     </button>
                 </div>
 
-                <div>
+                {/* Search */}
 
-                    {citasData && citasData.length === 0 && (
-                        <div className="text-center text-gray-500">No hay citas disponibles.</div>
-                    )}
-                    {citasData && citasData.length > 0 && (
-
-
-                        <CitasList
-                            citas={citasData}
-                        />
-                    )}
-
-
-                    {citasData && citasData.length > 0 && (
-                        <div className="text-center text-gray-500">Total de citas: {citasData.length}</div>
-                    )}
+                <div className="relative mb-4">
+                    <input
+                        type="text"
+                        placeholder="Buscar citas por paciente/descripcion/tratamiento..."
+                        className="w-full px-4 py-3 border border-gray-300 rounded-full shadow-md focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500 transition duration-200"
+                        value={searchTerm}
+                        onChange={handleInputChange}
+                        onKeyDown={handleKeyDown}
+                    />
+                    <button
+                        type="button"
+                        className="absolute right-2 top-1/2 transform -translate-y-1/2 px-4 py-3 bg-teal-500 text-white rounded-full shadow-md hover:bg-teal-700 transition duration-200 cursor-pointer"
+                        onClick={() => handleSearch()}
+                    >
+                        <FaSearch />
+                    </button>
                 </div>
 
-
-
-
+                <div>
+                    <CitasList citas={showcitasList} />
+                </div>
+                <AddCitaModal />
             </div>
-            <AddCitaModal />
-        </div>
+        </>
+
     );
 }
 

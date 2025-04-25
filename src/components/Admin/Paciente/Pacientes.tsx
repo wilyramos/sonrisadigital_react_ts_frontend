@@ -10,14 +10,12 @@ import { toast } from "react-toastify";
 import { useMutation } from "@tanstack/react-query";
 import { UserListResponse } from "@/types/index"; // Asegúrate de que la ruta sea correcta
 
-
 import { FaSearch } from "react-icons/fa";
 
 export default function PacientesURL() {
     const navigate = useNavigate();
     const location = useLocation();
 
-    //TODO: implementar el search de pacientes
     const [searchTerm, setSearchTerm] = useState("");
     const [searchPacienteResults, setSearchPacienteResults] = useState<UserListResponse | null>(null);
 
@@ -36,15 +34,15 @@ export default function PacientesURL() {
 
     // mutation para obtener los pacientes por busqueda
     const searchMutation = useMutation({
-            mutationFn: searchUsers,
-            onError: (error) => {
-                // console.log(error);
-                toast.error(error.message || 'Error al buscar el paciente.');
-            },
-            onSuccess: (data) => {
-                setSearchPacienteResults(data);
-            },
-        });
+        mutationFn: searchUsers,
+        onError: (error) => {
+            // console.log(error);
+            toast.error(error.message || 'Error al buscar el paciente.');
+        },
+        onSuccess: (data) => {
+            setSearchPacienteResults(data);
+        },
+    });
 
 
     const handleSearch = () => {
@@ -61,7 +59,7 @@ export default function PacientesURL() {
         } else {
             searchMutation.mutate(event.target.value.trim());
         }
-        
+
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {

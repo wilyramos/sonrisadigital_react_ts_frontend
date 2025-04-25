@@ -1,6 +1,7 @@
 import { useState } from "react";
 import dayjs from 'dayjs';
 import 'dayjs/locale/es';
+import { motion } from "framer-motion";
 
 dayjs.locale('es');
 
@@ -98,7 +99,12 @@ export default function Calendar() {
 
 
     return (
-        <div className="p-4 flex flex-col h-[calc(100vh-4rem)] rounded-2xl shadow-lg font-semibold">
+        <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="p-4 flex flex-col h-[calc(100vh-4rem)] rounded-2xl shadow-lg font-semibold"
+        >
             <div className="flex-grow overflow-auto">
                 <BigCalendar
                     localizer={localizer}
@@ -119,6 +125,6 @@ export default function Calendar() {
                     style={{ width: "100%" }}
                 />
             </div>
-        </div>
+        </motion.div>
     );
-}
+}    

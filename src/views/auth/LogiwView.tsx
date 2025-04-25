@@ -6,10 +6,17 @@ import { useMutation } from "@tanstack/react-query";
 import { authenticateUser } from "@/api/AuthAPI";
 import { toast } from "sonner";
 import ErrorMessage from "@/components/ErrorMessage";
+import { motion } from "framer-motion";
+
+const fadeUp = {
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0 },
+};
 
 export default function ModernLoginView() {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
+
     const {
         register,
         handleSubmit,
@@ -25,82 +32,70 @@ export default function ModernLoginView() {
         mutationFn: authenticateUser,
         onError: (error) => {
             setIsLoading(false);
-            if (error instanceof Error) {
-                toast.error(error.message);
-            } else {
-                toast.error("Error al iniciar sesión");
-            }
+            toast.error(error instanceof Error ? error.message : "Error al iniciar sesión");
         },
         onSuccess: () => {
             setIsLoading(false);
             toast.success("Inicio de sesión exitoso");
             navigate("/dashboard", { replace: true });
-        }
+        },
     });
 
-    const handleLogin = (formData: AuthLoginForm) => mutate(formData);
+    const handleLogin = (formData: AuthLoginForm) => {
+        setIsLoading(true);
+        mutate(formData);
+    };
 
     return (
         <div className="flex items-center justify-center">
-            <div className="relative bg-white  p-8 w-full max-w-md">
+            <motion.div
+                initial="hidden"
+                animate="visible"
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                variants={fadeUp}
+                className="relative bg-white p-10 w-full max-w-md shadow-xl rounded-3xl border border-gray-100"
+            >
                 <div className="mb-6 text-center">
-                    <img
-                        src="logo.svg"
-                        alt="Logo"
-                        className="w-24 h-24 mx-auto "
-                    />
-                    <h1 className="text-2xl font-bold text-lime-500 mb-2">
-                        Iniciar Sesión
-                    </h1>
-                    <p className="text-gray-600 text-sm mb-4">
-                        Bienvenido de nuevo, por favor ingresa tus credenciales.
-                    </p>
-
+                    <img src="/logo.svg" alt="Logo" className="w-20 h-20 mx-auto mb-4" />
+                    <h1 className="text-3xl font-bold text-teal-600 mb-2">Iniciar Sesión</h1>
+                    <p className="text-gray-600 text-sm">Ingresa tus credenciales para continuar</p>
                 </div>
-                <form onSubmit={handleSubmit(handleLogin)} className="space-y-4">
+
+                <form onSubmit={handleSubmit(handleLogin)} className="space-y-5">
                     <div>
-                        <label
-                            htmlFor="email"
-                            className="block text-gray-700 text-sm font-bold mb-2"
-                        >
+                        <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-1">
                             Email
                         </label>
                         <input
                             type="email"
                             id="email"
                             {...register("email", { required: "Este campo es obligatorio" })}
-                            className={`shadow appearance-none border rounded-2xl w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.email ? "border-red-500" : "border-gray-300"
+                            className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-400 transition ${errors.email ? "border-red-500" : "border-gray-300"
                                 }`}
-                            placeholder="Tu correo electrónico"
+                            placeholder="Correo electrónico"
                         />
                         {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
                     </div>
+
                     <div>
-                        <label
-                            htmlFor="password"
-                            className="block text-gray-700 text-sm font-bold mb-2"
-                        >
+                        <label htmlFor="password" className="block text-sm font-semibold text-gray-700 mb-1">
                             Contraseña
                         </label>
                         <input
                             type="password"
                             id="password"
-                            {...register("password", {
-                                required: "Este campo es obligatorio",
-                            })}
-                            className={`shadow appearance-none border rounded-2xl w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.password ? "border-red-500" : "border-gray-300"
+                            {...register("password", { required: "Este campo es obligatorio" })}
+                            className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-400 transition ${errors.password ? "border-red-500" : "border-gray-300"
                                 }`}
-                            placeholder="Tu contraseña"
+                            placeholder="Contraseña"
                         />
-                        {errors.password && (
-                            <ErrorMessage>{errors.password.message}</ErrorMessage>
-                        )}
+                        {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
                     </div>
 
-                    <div className="flex items-center justify-between">
+                    <div className="flex justify-end">
                         <Link
                             to="/forgot-password"
-                            className="inline-block align-baseline font-semibold text-sm text-teal-500 hover:text-teal-800"
+                            className="text-sm text-teal-500 hover:underline font-medium"
                         >
                             ¿Olvidaste tu contraseña?
                         </Link>
@@ -109,24 +104,24 @@ export default function ModernLoginView() {
                     <button
                         type="submit"
                         disabled={isLoading}
-                        className={`bg-teal-500 hover:bg-teal-700 text-white font-bold py-3 px-6 rounded-md focus:outline-none focus:shadow-outline w-full ${isLoading ? "opacity-50 cursor-not-allowed" : ""
+                        className={`w-full py-3 font-semibold text-white rounded-xl transition-all duration-300 ${isLoading
+                                ? "bg-teal-400 cursor-not-allowed opacity-60"
+                                : "bg-teal-500 hover:bg-teal-600"
                             }`}
                     >
                         {isLoading ? "Cargando..." : "Iniciar Sesión"}
                     </button>
                 </form>
+
                 <div className="mt-6 text-center">
                     <p className="text-gray-600 text-sm">
                         ¿No tienes una cuenta?{" "}
-                        <Link
-                            to="/register"
-                            className="font-semibold text-teal-500 hover:text-teal-800"
-                        >
+                        <Link to="/register" className="text-teal-500 font-semibold hover:underline">
                             Crear cuenta
                         </Link>
                     </p>
                 </div>
-            </div>
+            </motion.div>
         </div>
     );
 }
