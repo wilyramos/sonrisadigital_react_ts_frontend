@@ -13,7 +13,7 @@ const navItems = [
     { label: "Citas", icon: <Calendar size={18} />, path: "/calendar" },
     { label: "Pacientes", icon: <Users size={18} />, path: "/pacientes" },
     { label: "Odontólogos", icon: <Users size={18} />, path: "/medicos" },
-    { label: "Configuración", icon: <Settings size={18} />, path: "/configuracion" },
+    { label: "Configuración", icon: <Settings size={18} />, path: "/settings" },
 ];
 
 

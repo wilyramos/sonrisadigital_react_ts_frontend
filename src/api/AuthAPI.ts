@@ -107,3 +107,20 @@ export async function searchUsers(search: string) {
         return [];
     }
 }
+
+export async function getUserById(id: string) {
+    try {
+
+        const url = `/auth/user/${id}`;
+        const { data } = await api.get(url);
+        const response = userSchema.safeParse(data);
+
+        if (response.success) {
+            return response.data;
+        }
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error || "Error al obtener el usuario");
+        }
+    }
+}

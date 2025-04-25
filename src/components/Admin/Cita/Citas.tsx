@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 import AddCitaModal from "./AddCitaModal";
 import { useQuery } from "@tanstack/react-query";
