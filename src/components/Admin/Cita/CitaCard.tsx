@@ -30,7 +30,7 @@ export default function CitaCard({ cita, statusColors }: CitaCardProps) {
                 <button
                     onClick={() => navigate(`/dashboard?viewCita=${cita.id}`)}
                 >
-                    <p className="text-sm font-semibold text-blue-600 hover:underline line-clamp-2 text-left uppercase cursor-pointer">
+                    <p className="text-sm font-semibold text-blue-600 hover:underline uppercase cursor-pointer">
                         {cita.description && cita.description.length > 50
                             ? `${cita.description.slice(0, 50)}...`
                             : cita.description
@@ -40,7 +40,6 @@ export default function CitaCard({ cita, statusColors }: CitaCardProps) {
             </div>
 
             <div className="col-span-2 inline-flex items-center bg-gray-100 text-center justify-center rounded-lg border border-gray-300 shadow-sm px-1 font-extrabold text-sm">
-                {/* <FaClock className="text-gray-500" /> */}
                 <span className="text-gray-500 text-xs font-bold">{formatTimeOnly(cita.date)}</span>
             </div>
 

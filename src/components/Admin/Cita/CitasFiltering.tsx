@@ -40,7 +40,7 @@ export default function CitasFiltering() {
     return (
         <>
             <div className=""> 
-                <section className="w-full container grid grid-cols-1 md:grid-cols-4 gap-2shadow-xl rounded-xl border border-gray-200 gap-2">
+                <section className="w-full container grid grid-cols-1 md:grid-cols-4 gap-2 border-gray-200"> 
                     {/* Filtros */}
                     <aside className="md:col-span-1 border-r-2 border-gray-300 p-2">
                         <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
@@ -96,7 +96,7 @@ export default function CitasFiltering() {
                                             </div>
 
                                             {citasEnHora.length > 0 ? (
-                                                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-2"> {/* Modificamos las columnas */}
+                                                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-2"> 
                                                     {citasEnHora.map((cita) => (
                                                         <CitaCard key={cita.id} cita={cita} statusColors={statusColors} />
                                                     ))}

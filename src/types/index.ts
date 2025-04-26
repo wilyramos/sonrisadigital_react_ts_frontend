@@ -110,8 +110,15 @@ export const citaSchema = z.object({
     }),
 })
 
+
+export type CitaListCalendar = z.infer<typeof citaSchema> & {
+    start: Date
+    end: Date
+}
+
 export const citaListSchema = z.array(citaSchema)
 export type CitaList = z.infer<typeof citaListSchema>
+    
 
 
 export type CitaListResponse = {

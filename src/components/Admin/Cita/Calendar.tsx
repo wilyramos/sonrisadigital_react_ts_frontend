@@ -1,21 +1,34 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import dayjs from 'dayjs';
 import 'dayjs/locale/es';
 import { motion } from "framer-motion";
-
 dayjs.locale('es');
-
 import { Calendar as BigCalendar, View, dayjsLocalizer } from "react-big-calendar";
-import "react-big-calendar/lib/css/react-big-calendar.css"; // Mantener el CSS base de react-big-calendar
+import "react-big-calendar/lib/css/react-big-calendar.css";
+import { useQuery } from "@tanstack/react-query";
+import { getCitas } from "@/api/CitaAPI";
+import ClipLoader from "react-spinners/ClipLoader";
+import { useNavigate } from "react-router-dom";
 
 const localizer = dayjsLocalizer(dayjs);
 
 interface Event {
+    id: number; // ID de la cita
     start: Date;
     end: Date;
     title: string;
-    status?: "confirmed" | "pending" | "cancelled";
+    status?: string; // status ahora puede ser cualquier string o undefined
     description?: string;
+    medic?: {
+        name: string;
+        email: string;
+        id: number;
+        phone: string;
+        speciality: string;
+    };
+    patient?: {
+        [key: string]: any;
+    };
 }
 
 // Interfaz para las props que esperamos en EventComponent
@@ -34,9 +47,7 @@ const messages = {
 
 const EventComponent: React.FC<CustomEventComponentProps> = ({ event }) => {
     const status = event.status;
-
     let borderColorClass = 'border-gray-400'; // Default neutral
-    
 
     if (status === "confirmed") {
         borderColorClass = 'border-green-400';
@@ -45,8 +56,6 @@ const EventComponent: React.FC<CustomEventComponentProps> = ({ event }) => {
     } else if (status === "cancelled") {
         borderColorClass = 'border-red-400';
     }
-    
-
     return (
         <div className={`flex items-center border-l-6 ${borderColorClass} cursor-pointer `}>
             <div className="truncate px-1">
@@ -57,45 +66,67 @@ const EventComponent: React.FC<CustomEventComponentProps> = ({ event }) => {
 };
 
 export default function Calendar() {
+
     const [date, setDate] = useState<Date>(new Date());
     const [view, setView] = useState<View>("day");
+    const [events, setEvents] = useState<Event[]>([]);
 
 
-    const events: Event[] = [
+    /* Query para obtener las citas */
 
-        { start: new Date(2025, 3, 22, 10, 0), end: new Date(2025, 3, 22, 11, 0), title: "Reunión con el cliente A", status: "confirmed", description: "Discutir los requisitos del proyecto X." },
-        { start: new Date(2025, 3, 23, 14, 0), end: new Date(2025, 3, 23, 15, 0), title: "Cita médica", status: "pending", description: "Chequeo anual con el Dr. Gómez." },
-        { start: new Date(2025, 3, 23, 14, 30), end: new Date(2025, 3, 23, 15, 40), title: "Cita médica 2 (Traslape)", status: "pending", description: "Control de presión arterial." },
-        { start: new Date(2025, 3, 24, 9, 0), end: new Date(2025, 3, 24, 10, 0), title: "Reunión de equipo", status: "cancelled", description: "Reunión semanal pospuesta." },
-        { start: new Date(2025, 3, 24, 11, 0), end: new Date(2025, 3, 24, 12, 0), title: "Llamada con proveedor", status: "confirmed", description: "Seguimiento del pedido #12345." },
-        { start: new Date(2025, 3, 24), end: new Date(2025, 3, 25), title: "Cumpleaños de Juan" },
-        { start: new Date(2025, 3, 24, 12, 30), end: new Date(2025, 3, 24, 13, 15), title: "Cita con el Dr. Smith", status: "confirmed", description: "Revisión general dental." },
-        { start: new Date(2025, 3, 25, 9, 0), end: new Date(2025, 3, 25, 10, 0), title: "Reunión para discutir proyecto X larguísimo", status: "pending", description: "Brainstorming inicial de características y alcance." },
-        { start: new Date(2025, 3, 26, 14, 0), end: new Date(2025, 3, 26, 15, 0), title: "Llamada con el cliente B", status: "confirmed", description: "Actualización de progreso del proyecto Y." },
-        { start: new Date(2025, 3, 27, 10, 30), end: new Date(2025, 3, 27, 11, 0), title: "Evento cancelado importante", status: "cancelled", description: "Cancelado por falta de asistentes." },
-        { start: new Date(2025, 3, 28, 16, 0), end: new Date(2025, 3, 30, 17, 0), title: "Idea para nuevo proyecto", status: "pending", description: "Explorar viabilidad de la idea Z." },
-        { start: new Date(2025, 3, 29, 13, 0), end: new Date(2025, 3, 29, 14, 0), title: "Cita médica", status: "confirmed", description: "Chequeo anual con el Dr. Pérez." },
-        { start: new Date(2025, 3, 30, 9, 0), end: new Date(2025, 3, 30, 10, 0), title: "Reunión de seguimiento", status: "pending", description: "Revisar el progreso del proyecto X." },
-        { start: new Date(2025, 3, 30, 11, 0), end: new Date(2025, 3, 30, 12, 0), title: "Cita médica", status: "confirmed", description: "Chequeo anual con el Dr. López." },
-        { start: new Date(2025, 3, 30, 14, 0), end: new Date(2025, 3, 30, 15, 0), title: "Reunión de equipo", status: "cancelled", description: "Reunión semanal cancelada." },
-    ];
+    const { data: citasData, isLoading, isError } = useQuery({
+        queryKey: ["citas"],
+        queryFn: () => getCitas(),
+        retry: 1,
+    });
+
+    useEffect(() => {
+        if (citasData) {
+            const formattedEvents: Event[] = citasData.map(cita => {
+                const startDate = dayjs(cita.date).toDate();
+                const endDate = dayjs(cita.date).add(1, 'hour').toDate();
+                return {
+                    start: startDate,
+                    end: endDate,
+                    title: `${cita.description} - ${cita.patient.name}`,
+                    status: cita.status,
+                    description: cita.description,
+                    medic: cita.medic,
+                    patient: cita.patient,
+                    id: cita.id, 
+                };
+            });
+            setEvents(formattedEvents);
+        }
+    }, [citasData]);
 
     const handleNavigate = (newDate: Date) => setDate(newDate);
-    const handleSelectEvent = (event: Event) => console.log("Evento seleccionado:", event);
+
+    // Button to select event
+
+    const navigate = useNavigate();
+    const handleSelectEvent = (event: Event) => {
+        navigate(`/calendar?viewCita=${event.id}`);
+    };
 
     const handleViewChange = (newView: View) => {
         setView(newView);
     };
 
+    // settins react-big-calendar
     const components = {
         event: EventComponent as React.ComponentType<any>,
     };
 
     const minTime = new Date();
-    minTime.setHours(8, 0, 0, 0); // 8:00 AM
+    minTime.setHours(8, 0, 0, 0);
 
     const maxTime = new Date();
-    maxTime.setHours(20, 0, 0, 0); // 8:00 PM
+    maxTime.setHours(20, 0, 0, 0);
+
+
+    if (isLoading) return <div className="text-center"><ClipLoader color="#10b981" size={40} /></div>;
+    if (isError) return <div className="text-red-500 text-center">Error al cargar las citas.</div>;
 
 
     return (
@@ -108,7 +139,7 @@ export default function Calendar() {
             <div className="flex-grow overflow-auto">
                 <BigCalendar
                     localizer={localizer}
-                    events={events}
+                    events={events} // Usa el estado 'events' que ahora contiene tus citas formateadas
                     components={components}
                     date={date}
                     onNavigate={handleNavigate}
@@ -127,4 +158,4 @@ export default function Calendar() {
             </div>
         </motion.div>
     );
-}    
+}

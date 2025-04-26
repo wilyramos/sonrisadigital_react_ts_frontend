@@ -1,7 +1,7 @@
 import { CalendarDays, Users, CheckCircle, XCircle, Clock } from "lucide-react";
 import CitasFiltering from "../Cita/CitasFiltering";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion"; // Importamos motion
+import { motion } from "framer-motion"; 
 
 // Define variants for the main container (controls staggering)
 const containerVariants = {
@@ -36,16 +36,12 @@ export default function Dashboard() {
             initial="hidden"
             animate="visible"       // Trigger the animation on mount
         >
-            {/* Header Section - Animate the whole div */}
             <motion.div variants={itemVariants}>
                 <h1 className="text-3xl font-bold text-gray-800 mb-1">Panel de Citas</h1>
                 <p className="text-gray-600 text-sm">Resumen general y gestión de citas.</p>
             </motion.div>
 
-            {/* Resumen de estadísticas - Animate each stat card */}
-            {/* The grid container itself doesn't need itemVariants if we animate children */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
-                {/* Each stat card is wrapped with motion.div */}
                 <motion.div variants={itemVariants} className="bg-white rounded-xl shadow-lg p-2 flex justify-between items-center">
                     <div className="flex gap-2">
                         <CalendarDays className="text-blue-500 w-7 h-7" />

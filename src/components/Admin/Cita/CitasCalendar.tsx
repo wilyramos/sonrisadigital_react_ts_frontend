@@ -1,33 +1,19 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 import AddCitaModal from "./AddCitaModal";
-import { useQuery } from "@tanstack/react-query";
-import { getCitas } from "@/api/CitaAPI";
-import ClipLoader from "react-spinners/ClipLoader";
 import Calendar from "./Calendar";
+import CitaDetailsModal from "./CitaDetailsModal";
 
 
 export default function CitasCalendar() {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const { data: citasData, isLoading, isError } = useQuery({
-        queryKey: ["citas"],
-        queryFn: () => getCitas(),
-        retry: 1,
-    });
-
-    
-    if (isLoading) return <div className="text-center"><ClipLoader color="#10b981" size={40} /></div>;
-    if (isError) return <div className="text-red-500 text-center">Error al cargar las citas.</div>;
 
 
     return (
-
-
         <>
-
-            <div className="p-8 space-y-8">
+            <div className="p-2 space-y-4">
                 <div className="flex justify-between items-center mb-2">
                     <h1 className="text-3xl font-bold text-gray-800 mb-1">Calendario de Citas</h1>
                     <Link to="/citas" className="text-gray-500 hover:text-gray-700 transition duration-150">
@@ -40,12 +26,13 @@ export default function CitasCalendar() {
                         <FaPlus className="mr-2" /> Nueva Cita
                     </button>
                 </div>
-                <Calendar />
-                <div className="flex justify-center items-center mt-4">
-                    <div className="text-gray-500 text-sm">Citas disponibles: {citasData?.length}</div>
-                </div>
+                <Calendar 
+                    
+                />
+                
             </div>
             <AddCitaModal />
+            <CitaDetailsModal />
         </>
     );
 }
