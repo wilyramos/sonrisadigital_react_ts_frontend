@@ -1,6 +1,6 @@
 import api from "@/lib/axios";
 import { isAxiosError } from "axios";
-import { AuthLoginForm } from "@/types/index";
+import { AuthLoginForm, type CheckPasswordForm } from "@/types/index";
 import { userSchema, userListSchema, userListArraySchema } from "@/types/index";
 
 
@@ -121,6 +121,30 @@ export async function getUserById(id: string) {
     } catch (error) {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error || "Error al obtener el usuario");
+        }
+    }
+}
+
+export async function checkPassword(password: CheckPasswordForm) {
+    try {
+        const url = "/auth/check-password";
+        const { data } = await api.post(url, password);
+        return data;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.message);
+        }
+    }
+}
+
+export async function deleteUser(id: string) {
+    try {
+        const url = `/auth/delete-account/${id}`;
+        const { data } = await api.delete(url);
+        return data;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.message);
         }
     }
 }

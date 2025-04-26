@@ -13,7 +13,7 @@ type Auth = z.infer<typeof authSchema>
 
 export type AuthLoginForm = Pick<Auth, 'email' | 'password'>
 export type AuthRegisterForm = Pick<Auth, 'name' | 'email' | 'password' | 'passwordConfirmation'>
-
+export type CheckPasswordForm = Pick<Auth, 'password'>
 
 /** User */
 

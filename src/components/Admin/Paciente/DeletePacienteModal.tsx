@@ -3,14 +3,15 @@ import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useForm } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { useQueryClient } from "@tanstack/react-query";
+import type { CheckPasswordForm } from "@/types/index";
+import { checkPassword, deleteUser } from "@/api/AuthAPI";
 
 
 export default function DeletePacienteModal() {
 
-    const initialValues = {
+    const initialValues: CheckPasswordForm  = {
         password: "",
     };
 
@@ -25,18 +26,39 @@ export default function DeletePacienteModal() {
 
     const { register, handleSubmit, formState: { errors } } = useForm({defaultValues: initialValues});
 
-    const handleForm = (data: { password: string }) => {
 
-        console.log("Form data", data);
-    };
+    const queryClient = useQueryClient();
+    const CheckPasswordForm = useMutation({
+        mutationFn: checkPassword,
+        onError: (error) => toast.error(error.message || "Error al verificar la contraseña"),
+        onSuccess: (data) => {
+            toast.success(data.message);
+        }
+    });
 
-    console.log("deletePaciente", deletePaciente)
-    console.log("Id del paciente", pacienteId)
+    const deletePacienteMutation = useMutation({
+        mutationFn: deleteUser,
+        onError: (error) => toast.error(error.message || "Error al eliminar el paciente"),
+        onSuccess: (data) => {
+            toast.success(data.message);
+            queryClient.invalidateQueries({ queryKey: ["pacientes"] });
+
+            // navigate to the previous page
+            navigate("/pacientes", { replace: true });
+        }
+    });
+
 
     const closeModal = () => {
         navigate(location.pathname, { replace: true });
     }
 
+    const handleForm = async (data: CheckPasswordForm) => {
+        
+
+        await CheckPasswordForm.mutateAsync(data);
+        await deletePacienteMutation.mutateAsync(pacienteId);
+    }
     return (
         <>
 
