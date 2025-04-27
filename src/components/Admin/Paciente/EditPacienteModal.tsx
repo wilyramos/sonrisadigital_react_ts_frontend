@@ -9,6 +9,7 @@ import { Fragment } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import PacienteForm from "./PacienteForm";
 import { updateUser } from "@/api/AuthAPI";
+import { toast } from "react-toastify";
 
 
 interface PropsEditPacienteModal {
@@ -44,6 +45,8 @@ export default function EditPacienteModal({ data }: PropsEditPacienteModal) {
             console.error(error);
         },
         onSuccess: (data) => {
+            toast.success(data.message);
+
             queryClient.invalidateQueries({ queryKey: ["paciente", params.pacienteId] });
             navigate(location.pathname, { replace: true });
         }

@@ -166,6 +166,7 @@ export async function updateUser({ id, formData }: { id: string; formData: UserF
     try {
         const url = `/auth/update-user/${id}`;
         const { data } = await api.put(url, formData);
+        console.log(data);
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
