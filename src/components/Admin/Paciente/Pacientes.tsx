@@ -12,7 +12,7 @@ import { UserListResponse } from "@/types/index"; // Asegúrate de que la ruta s
 
 import { FaSearch } from "react-icons/fa";
 
-export default function PacientesURL() {
+export default function Pacientes() {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -146,6 +146,7 @@ export default function PacientesURL() {
                     </div>
                 </div>
                 <AddPacienteModal />
+                
             </>
         );
 }

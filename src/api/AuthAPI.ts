@@ -2,6 +2,7 @@ import api from "@/lib/axios";
 import { isAxiosError } from "axios";
 import { AuthLoginForm, type CheckPasswordForm } from "@/types/index";
 import { userSchema, userListSchema, userListArraySchema } from "@/types/index";
+import { UserForm } from "@/types/index";
 
 
 
@@ -11,6 +12,18 @@ export async function registerUser(formData: AuthLoginForm) {
         const url = "/auth/create-account";
         const { data } = await api.post<string>(url, formData);
         console.log(data);
+        return data;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.message || "Error al registrar usuario");
+        }
+    }
+}
+
+export async function registerUserByAdmin(formData: UserForm) {
+    try {
+        const url = "/auth/create-user-by-admin";
+        const { data } = await api.post<string>(url, formData);
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {

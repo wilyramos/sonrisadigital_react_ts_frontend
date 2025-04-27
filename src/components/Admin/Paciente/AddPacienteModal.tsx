@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { toast } from 'react-toastify';
-import { registerUser } from '@/api/AuthAPI'; 
+import { registerUserByAdmin } from '@/api/AuthAPI'; 
 import PacienteForm from './PacienteForm';
 import { useQueryClient } from '@tanstack/react-query';
 import type { PacienteFormData } from '@/types/index'; 
@@ -17,13 +17,13 @@ export default function AddPacienteModal() {
     const show = !!queryparams.get('newPaciente');
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm<PacienteFormData>({
-        defaultValues: { name: '', email: '', password: '', phone: '' }, // Ajusta los campos según tu modelo de Paciente
+        defaultValues: { name: '', email: '', phone: '' }, 
     });
 
     const queryClient = useQueryClient();
 
     const { mutate } = useMutation({
-        mutationFn: registerUser, // Ajusta la función de la API
+        mutationFn: registerUserByAdmin, // Ajusta la función de la API
         onError: (error) => {
             toast.error(error.message || 'Error al crear el paciente.');
         },
@@ -37,8 +37,7 @@ export default function AddPacienteModal() {
     });
 
     const handleCreatePaciente = (formData: PacienteFormData) => {
-        const { passwordConfirmation, ...rest } = formData; // Desestructura para no enviar passwordConfirmation
-        mutate(rest); // Envía el resto de los datos al servidor
+        mutate(formData); // Envía los datos del formulario a la API
     };
 
     const closeModal = () => {

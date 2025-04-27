@@ -27,6 +27,7 @@ export const userSchema = authSchema.pick({
 })
 
 export type User = z.infer<typeof userSchema>
+// used in the form to create a user by admin
 export type UserForm = Pick<User, 'name' | 'email' | 'phone'>
 
 
@@ -81,7 +82,7 @@ export const pacienteSchema = z.object({
 })
 
 export type Paciente = z.infer<typeof pacienteSchema>
-export type PacienteFormData = Pick<Paciente, 'name' | 'email' | 'password' | 'passwordConfirmation' | 'phone'>;
+export type PacienteFormData = Pick<Paciente, 'name' | 'email' | 'phone'>;
 
 
 /** Cita */

@@ -9,6 +9,7 @@ import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
 import DeletePacienteModal from "./DeletePacienteModal";
+import EditPacienteModal from "./EditPacienteModal";
 
 export default function PacientesDetailsView() {
     // Get the patient ID from the URL parameters
@@ -139,6 +140,7 @@ export default function PacientesDetailsView() {
                 </div>
             </div>
             <DeletePacienteModal />
+            <EditPacienteModal />
         </>
     );
 }
