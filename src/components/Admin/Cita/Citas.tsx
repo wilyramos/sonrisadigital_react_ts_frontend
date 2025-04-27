@@ -10,8 +10,8 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useMutation } from "@tanstack/react-query";
 import { getCitasSearch } from "@/api/CitaAPI";
-import type { CitaList } from "@/types/index"; // Asegúrate de que la ruta sea correcta
-
+import type { CitaList } from "@/types/index";
+import CitaDetailsModal from "./CitaDetailsModal";
 export default function Citas() {
 
     // Search 
@@ -108,6 +108,7 @@ export default function Citas() {
                 </div>
                 <AddCitaModal />
             </div>
+            <CitaDetailsModal />
         </>
 
     );

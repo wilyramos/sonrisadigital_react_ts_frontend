@@ -1,4 +1,4 @@
-import { Home, Calendar, Users, Settings, LogOut } from "lucide-react";
+import { Home, Calendar, Users, LogOut } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import Logo from "../Logo";
 import type { User } from "@/types/index";
@@ -13,7 +13,7 @@ const navItems = [
     { label: "Citas", icon: <Calendar size={18} />, path: "/calendar" },
     { label: "Pacientes", icon: <Users size={18} />, path: "/pacientes" },
     { label: "Odontólogos", icon: <Users size={18} />, path: "/medicos" },
-    { label: "Configuración", icon: <Settings size={18} />, path: "/settings" },
+    // { label: "Configuración", icon: <Settings size={18} />, path: "/settings" },
 ];
 
 

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PublicLayout from "./layouts/PublicLayout";
 import PacienteLayout from "./layouts/PacienteLayout";
 import Home from "./views/home";
+import Servicios from "./views/servicios";
 import LogiwView from "./views/auth/LogiwView";
 import RegisterView from "./views/auth/RegisterView";
 import AdminLayout from "./layouts/AdminLayout";
@@ -13,6 +14,7 @@ import Citas from "./components/Admin/Cita/Citas";
 import CitaDetailsView from "./components/Admin/Cita/CitaDetailsView";
 import CitasCalendar from "./components/Admin/Cita/CitasCalendar";
 import PacientesDetailsView from "./components/Admin/Paciente/PacientesDetailsView";
+import About from "./views/About";
 
 
 export default function App() {
@@ -23,6 +25,8 @@ export default function App() {
 
                     {/* Rutas publicas */}
                     <Route path="/" element={<Home />} index />
+                    <Route path="/servicios" element={<Servicios />} />
+                    <Route path="/nosotros" element={<About />} />
                     <Route path="/login" element={<LogiwView />} />
                     <Route path="/register" element={<RegisterView />} />
                     <Route path="/forgot-password" element={<h1>Forgot Password</h1>} />

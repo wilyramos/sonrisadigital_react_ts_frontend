@@ -42,7 +42,7 @@ export default function EditPacienteModal({ data }: PropsEditPacienteModal) {
     const updatePacienteMutation = useMutation({
         mutationFn: updateUser,
         onError: (error) => {
-            console.error(error);
+            toast.error(error.message);
         },
         onSuccess: (data) => {
             toast.success(data.message);
