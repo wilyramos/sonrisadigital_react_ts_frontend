@@ -11,6 +11,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import DeletePacienteModal from "./DeletePacienteModal";
 import EditPacienteModal from "./EditPacienteModal";
 import { getCitasByPatientId } from "@/api/CitaAPI";
+import { MdDescription, MdCalendarToday, MdCheckCircle, MdPending, MdCancel, MdPerson, MdPhone, MdEmail } from "react-icons/md";
 
 export default function PacientesDetailsView() {
     // Get the patient ID from the URL parameters
@@ -126,8 +127,6 @@ export default function PacientesDetailsView() {
                         {pacienteData.name}
                     </h2>
                     <div className="space-y-3">
-                        {" "}
-                        {/* Spacing between detail lines */}
                         <p className="text-gray-600">
                             <strong className="font-medium text-gray-700">Email:</strong>{" "}
                             {pacienteData.email}
@@ -136,30 +135,57 @@ export default function PacientesDetailsView() {
                             <strong className="font-medium text-gray-700">Teléfono:</strong>{" "}
                             {pacienteData.phone}
                         </p>
-
                     </div>
 
-                    
-                    <div className="mt-6">
-                        <h3 className="text-lg font-semibold text-gray-700 mb-4">Citas</h3>
-                        {appointmentData?(
-                            <ul className="space-y-4">
+                    <div className="mt-8">
+                        <h3 className="text-xl font-semibold text-gray-700 mb-4 border-b pb-2">Citas del Paciente</h3>
+                        {appointmentData && appointmentData.length > 0 ? (
+                            <ul className="space-y-6">
                                 {appointmentData.map((appointment) => (
-                                    <li key={appointment.id} className="bg-gray-100 p-4 rounded-md shadow-sm">
-                                        <p className="text-gray-600">
-                                            <strong className="font-medium text-gray-700">Descripción:</strong>{" "}
-                                            {appointment.description}
-                                        </p>
-                                        <p className="text-gray-600">
-                                            <strong className="font-medium text-gray-700">Fecha:</strong>{" "}
-                                            {new Date(appointment.date).toLocaleDateString()}
-                                        </p>
+                                    <li key={appointment.id} className="bg-gray-50 border border-gray-200 rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div className="space-y-2">
+                                                <p className="text-gray-700 flex items-center">
+                                                    <MdDescription className="h-5 w-5 text-blue-500 mr-2" /> {/* React Icon */}
+                                                    <strong className="font-semibold text-gray-700">Descripción:</strong>{" "}
+                                                    <span className="font-normal ml-2">{appointment.description}</span>
+                                                </p>
+                                                <p className="text-gray-700 flex items-center">
+                                                    <MdCalendarToday className="h-5 w-5 text-green-500 mr-2" /> {/* React Icon */}
+                                                    <strong className="font-semibold text-gray-700">Fecha:</strong>{" "}
+                                                    <span className="font-normal ml-2">{new Date(appointment.date).toLocaleDateString()}</span>
+                                                </p>
+                                                <p className={`text-gray-700 flex items-center ${appointment.status === 'Completed' ? 'text-green-600' : appointment.status === 'Pending' ? 'text-yellow-600' : 'text-red-600'}`}>
+                                                     {appointment.status === 'Completed' && <MdCheckCircle className="h-5 w-5 mr-2" />} {/* React Icon based on status */}
+                                                     {appointment.status === 'Pending' && <MdPending className="h-5 w-5 mr-2" />} {/* React Icon based on status */}
+                                                     {appointment.status === 'Cancelled' && <MdCancel className="h-5 w-5 mr-2" />} {/* React Icon based on status */}
+                                                    <strong className="font-semibold text-gray-700">Estado:</strong>{" "}
+                                                    <span className="font-normal ml-2">{appointment.status}</span>
+                                                </p>
+                                            </div>
+                                            <div className="space-y-2">
+                                                 <p className="text-gray-700 flex items-center">
+                                                    <MdPerson className="h-5 w-5 text-purple-500 mr-2" /> {/* React Icon */}
+                                                    <strong className="font-semibold text-gray-700">Médico:</strong>{" "}
+                                                    <span className="font-normal ml-2">{appointment.medic.name}</span>
+                                                </p>
+                                                <p className="text-gray-700 flex items-center">
+                                                    <MdPhone className="h-5 w-5 text-teal-500 mr-2" /> {/* React Icon */}
+                                                    <strong className="font-semibold text-gray-700">Teléfono:</strong>{" "}
+                                                    <span className="font-normal ml-2">{appointment.medic.phone}</span>
+                                                </p>
+                                                <p className="text-gray-700 flex items-center">
+                                                    <MdEmail className="h-5 w-5 text-indigo-500 mr-2" /> {/* React Icon */}
+                                                    <strong className="font-semibold text-gray-700">Email:</strong>{" "}
+                                                    <span className="font-normal ml-2">{appointment.medic.email}</span>
+                                                </p>
+                                            </div>
+                                        </div>
                                     </li>
                                 ))}
                             </ul>
                         ) : (
                             <p className="text-gray-600">No hay citas disponibles para este paciente.</p>
-
                         )}
                     </div>
                 </div>
