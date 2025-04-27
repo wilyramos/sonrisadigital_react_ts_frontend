@@ -161,3 +161,15 @@ export async function deleteUser(id: string) {
         }
     }
 }
+
+export async function updateUser({ id, formData }: { id: string; formData: UserForm }) {
+    try {
+        const url = `/auth/update-user/${id}`;
+        const { data } = await api.put(url, formData);
+        return data;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.message);
+        }
+    }
+}

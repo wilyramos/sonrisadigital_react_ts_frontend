@@ -20,14 +20,19 @@ export default function PacientesDetailsView() {
     const navigate = useNavigate()
     const location = useLocation();
 
-
     // Use query to fetch patient details
-    const { data: pacienteData, isLoading, isError} = useQuery({
+    const { data: pacienteData, isLoading, isError } = useQuery({
         queryKey: ["paciente", pacienteId],
         queryFn: () => getUserById(pacienteId),
         retry: 1,
     });
 
+    // Get the patient data for editing
+    const pacienteDataEdit = {
+        name: pacienteData?.name ?? "",
+        email: pacienteData?.email ?? "",
+        phone: pacienteData?.phone!!,
+    };
 
     // get apointment by patientId
     const { data: appointmentData, isLoading: isLoadingAppointment, isError: isErrorAppointment } = useQuery({
@@ -35,11 +40,6 @@ export default function PacientesDetailsView() {
         queryFn: () => getCitasByPatientId(pacienteId),
         retry: 1,
     });
-
-    console.log(appointmentData);
-    console.log(pacienteData);
-    // console.log(isLoading);
-
 
 
     // Handle loading state
@@ -62,7 +62,7 @@ export default function PacientesDetailsView() {
     }
 
     // Ensure patient data exists before rendering details
-    if (!pacienteData ) {
+    if (!pacienteData) {
         return (
             <div className="flex items-center justify-center min-h-screen bg-gray-100">
                 <p>No se encontraron datos para el paciente.</p>
@@ -144,39 +144,38 @@ export default function PacientesDetailsView() {
                                 {appointmentData.map((appointment) => (
                                     <li key={appointment.id} className="bg-gray-50 border border-gray-200 rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow">
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                                            <p className=" col-span-2 text-gray-700 flex items-center">
+                                                <MdDescription className="h-5 w-5 text-blue-500 mr-2" />
+                                                <span className="ml-2 font-bold">{appointment.description}</span>
+                                            </p>
                                             <div className="space-y-2">
-                                                <p className="text-gray-700 flex items-center">
-                                                    <MdDescription className="h-5 w-5 text-blue-500 mr-2" /> {/* React Icon */}
-                                                    <strong className="font-semibold text-gray-700">Descripción:</strong>{" "}
-                                                    <span className="font-normal ml-2">{appointment.description}</span>
-                                                </p>
+
                                                 <p className="text-gray-700 flex items-center">
                                                     <MdCalendarToday className="h-5 w-5 text-green-500 mr-2" /> {/* React Icon */}
                                                     <strong className="font-semibold text-gray-700">Fecha:</strong>{" "}
                                                     <span className="font-normal ml-2">{new Date(appointment.date).toLocaleDateString()}</span>
                                                 </p>
                                                 <p className={`text-gray-700 flex items-center ${appointment.status === 'Completed' ? 'text-green-600' : appointment.status === 'Pending' ? 'text-yellow-600' : 'text-red-600'}`}>
-                                                     {appointment.status === 'Completed' && <MdCheckCircle className="h-5 w-5 mr-2" />} {/* React Icon based on status */}
-                                                     {appointment.status === 'Pending' && <MdPending className="h-5 w-5 mr-2" />} {/* React Icon based on status */}
-                                                     {appointment.status === 'Cancelled' && <MdCancel className="h-5 w-5 mr-2" />} {/* React Icon based on status */}
+                                                    {appointment.status === 'Completed' && <MdCheckCircle className="h-5 w-5 mr-2" />} {/* React Icon based on status */}
+                                                    {appointment.status === 'Pending' && <MdPending className="h-5 w-5 mr-2" />} {/* React Icon based on status */}
+                                                    {appointment.status === 'Cancelled' && <MdCancel className="h-5 w-5 mr-2" />} {/* React Icon based on status */}
                                                     <strong className="font-semibold text-gray-700">Estado:</strong>{" "}
                                                     <span className="font-normal ml-2">{appointment.status}</span>
                                                 </p>
                                             </div>
-                                            <div className="space-y-2">
-                                                 <p className="text-gray-700 flex items-center">
+                                            <div className="text-xs rounded-2xl shadow-2xl p-2 bg-gray-100 ">
+                                                <p className="text-gray-700 flex items-center">
                                                     <MdPerson className="h-5 w-5 text-purple-500 mr-2" /> {/* React Icon */}
                                                     <strong className="font-semibold text-gray-700">Médico:</strong>{" "}
                                                     <span className="font-normal ml-2">{appointment.medic.name}</span>
                                                 </p>
                                                 <p className="text-gray-700 flex items-center">
                                                     <MdPhone className="h-5 w-5 text-teal-500 mr-2" /> {/* React Icon */}
-                                                    <strong className="font-semibold text-gray-700">Teléfono:</strong>{" "}
                                                     <span className="font-normal ml-2">{appointment.medic.phone}</span>
                                                 </p>
                                                 <p className="text-gray-700 flex items-center">
                                                     <MdEmail className="h-5 w-5 text-indigo-500 mr-2" /> {/* React Icon */}
-                                                    <strong className="font-semibold text-gray-700">Email:</strong>{" "}
                                                     <span className="font-normal ml-2">{appointment.medic.email}</span>
                                                 </p>
                                             </div>
@@ -191,7 +190,9 @@ export default function PacientesDetailsView() {
                 </div>
             </div>
             <DeletePacienteModal />
-            <EditPacienteModal />
+            <EditPacienteModal 
+                data={pacienteDataEdit}
+            />
         </>
     );
 }
