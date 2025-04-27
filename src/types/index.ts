@@ -112,14 +112,20 @@ export const citaSchema = z.object({
 })
 
 
+// CitaListResponseByPatientId es un array de los objetos de citaSchema pero sin el patient y medic
+export const citaListResponseByPatientIdSchema = z.array(citaSchema.omit({ patient: true }));
+export type CitaListResponseByPatientId = z.infer<typeof citaListResponseByPatientIdSchema>
+
+
+// para el react-big-calendar
 export type CitaListCalendar = z.infer<typeof citaSchema> & {
     start: Date
     end: Date
 }
 
+
 export const citaListSchema = z.array(citaSchema)
 export type CitaList = z.infer<typeof citaListSchema>
-    
 
 
 export type CitaListResponse = {

@@ -3,6 +3,7 @@ import { isAxiosError } from "axios";
 import { CitaFormData } from "@/types/index";
 import { citaListSchema } from "@/types/index";
 import { CitaStatus } from "@/types/index";
+import { citaListResponseByPatientIdSchema } from "@/types/index";
 
 
 export async function crearCita(formData: CitaFormData) {
@@ -95,6 +96,22 @@ export async function updateStatusCita({ citaId, status }: { citaId: string; sta
     } catch (error) {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error || "Error al actualizar el estado de la cita");
+        }
+    }
+}
+
+export async function getCitasByPatientId(patientId: string) {
+    try {
+        const url = `/cita/patient/${patientId}`;
+        const { data } = await api.get(url);
+        const response = citaListResponseByPatientIdSchema.safeParse(data);
+        
+        if (response.success) {
+            return response.data;
+        }
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error || "Error al obtener las citas por paciente");
         }
     }
 }
