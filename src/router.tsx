@@ -16,7 +16,6 @@ import CitasCalendar from "./components/Admin/Cita/CitasCalendar";
 import PacientesDetailsView from "./components/Admin/Paciente/PacientesDetailsView";
 import About from "./views/About";
 
-
 export default function App() {
     return (
         <Router>

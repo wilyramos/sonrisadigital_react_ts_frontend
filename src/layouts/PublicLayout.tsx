@@ -2,6 +2,7 @@ import Navigation from "../components/Nav/Navigation";
 import { Outlet } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { Toaster } from 'sonner'
+import { ToastContainer } from "react-toastify";
 
 
 
@@ -24,7 +25,8 @@ export default function PublicLayout() {
             <Toaster                
                 position="top-right"
                 richColors
-            />            
+            /> 
+            <ToastContainer /> 
         </>
     )
 }

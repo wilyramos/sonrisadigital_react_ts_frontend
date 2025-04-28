@@ -4,9 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthLoginForm } from "@/types/index";
 import { useMutation } from "@tanstack/react-query";
 import { authenticateUser } from "@/api/AuthAPI";
-import { toast } from "sonner";
+// import { toast } from "sonner";
 import ErrorMessage from "@/components/ErrorMessage";
 import { motion } from "framer-motion";
+import { toast } from 'react-toastify';
+
 
 const fadeUp = {
     hidden: { opacity: 0, y: 40 },
@@ -31,8 +33,9 @@ export default function ModernLoginView() {
     const { mutate } = useMutation({
         mutationFn: authenticateUser,
         onError: (error) => {
+            console.error(error);
             setIsLoading(false);
-            toast.error(error instanceof Error ? error.message : "Error al iniciar sesión");
+            toast.error(error.message || "Error al iniciar sesión f");
         },
         onSuccess: () => {
             setIsLoading(false);
@@ -43,6 +46,8 @@ export default function ModernLoginView() {
 
     const handleLogin = (formData: AuthLoginForm) => {
         setIsLoading(true);
+        toast.info("Iniciando sesión...");
+        console.log(formData);
         mutate(formData);
     };
 

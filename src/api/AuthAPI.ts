@@ -15,7 +15,9 @@ export async function registerUser(formData: AuthLoginForm) {
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
-            throw new Error(error.response.data.message || "Error al registrar usuario");
+            throw new Error(error.response.data.message);
+        } else {
+            throw new Error("Error al registrar usuario");
         }
     }
 }
@@ -36,14 +38,15 @@ export async function authenticateUser(formData: AuthLoginForm) {
     try {
         const url = "/auth/login";
         const { data } = await api.post(url, formData);
-        
+
         localStorage.setItem("AUTH_TOKEN_SONRISADIGITAL", data);
         return data;
     } catch (error) {
-        // console.log(error);
         if (isAxiosError(error) && error.response) {
-            throw new Error(error.response.data.message);
-        }        
+            throw new Error(error.response.data.error);
+        } else {
+            throw new Error("Error al iniciar sesión");
+        }
     }
 }
 
@@ -58,7 +61,7 @@ export async function getUser(){
         }
     } catch (error) {
         if (isAxiosError(error) && error.response) {
-            throw new Error(error.response.data.error || "Error al obtener el usuario");
+            throw new Error(error.response.data.error);
         }
     }
 }
