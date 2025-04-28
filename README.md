@@ -1,4 +1,4 @@
-**# 📌 Frontend - SocialLynks Todos tus enlaces en un solo lugar**
+**# 📌 Frontend - Sonrisa Digital: Gestión de Citas Odontológicas**
 
 **#Demo**: https://sonrisadigital.vercel.app/
 
