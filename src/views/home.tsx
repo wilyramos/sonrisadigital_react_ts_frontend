@@ -1,5 +1,5 @@
 import Header from '../components/Home/Header'
-import Servicios from './servicios'
+import Servicios from "./Servicios";
 
 export default function home() {
 
