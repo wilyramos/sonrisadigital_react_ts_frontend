@@ -6,7 +6,7 @@ import { Transition } from '@headlessui/react'; // Import Transition for animati
 
 export default function Navigation({ isPrivate }: { isPrivate?: boolean }) {
     const [isNosotrosOpen, setIsNosotrosOpen] = useState(false);
-    const [isServiciosOpen, setIsServiciosOpen] = useState(false);
+    // const [isServiciosOpen, setIsServiciosOpen] = useState(false);
 
     return (
         <nav className='bg-white py-6'> {/* Added shadow for better separation */}
@@ -53,8 +53,8 @@ export default function Navigation({ isPrivate }: { isPrivate?: boolean }) {
                     </div>
                     <div
                         className="relative"
-                        onMouseEnter={() => setIsServiciosOpen(true)}
-                        onMouseLeave={() => setIsServiciosOpen(false)}
+                        // onMouseEnter={() => setIsServiciosOpen(true)}
+                        // onMouseLeave={() => setIsServiciosOpen(false)}
                     >
                         <Link to="/servicios" className="text-gray-700 hover:text-teal-600 focus:outline-none">
                             Servicios
