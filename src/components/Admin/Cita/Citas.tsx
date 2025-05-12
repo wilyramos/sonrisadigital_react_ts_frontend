@@ -12,6 +12,7 @@ import { useMutation } from "@tanstack/react-query";
 import { getCitasSearch } from "@/api/CitaAPI";
 import type { CitaList } from "@/types/index";
 import CitaDetailsModal from "./CitaDetailsModal";
+import Heading from "../Heading";
 export default function Citas() {
 
     // Search 
@@ -74,7 +75,7 @@ export default function Citas() {
         <>
             <div className="p-10">
                 <div className="flex justify-between items-center mb-8">
-                    <h1 className="text-3xl font-semibold text-gray-800">Listado de Citas</h1>
+                    <Heading>Lista de Citas</Heading>
                     <button
                         onClick={() => navigate(location.pathname + `?newCita=true`)}
                         className="flex items-center px-4 py-2 bg-teal-500 text-white rounded-md shadow-sm hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 transition duration-150"

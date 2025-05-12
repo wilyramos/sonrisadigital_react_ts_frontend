@@ -12,6 +12,7 @@ import DeletePacienteModal from "./DeletePacienteModal";
 import EditPacienteModal from "./EditPacienteModal";
 import { getCitasByPatientId } from "@/api/CitaAPI";
 import { MdDescription, MdCalendarToday, MdCheckCircle, MdPending, MdCancel, MdPerson, MdPhone, MdEmail } from "react-icons/md";
+import Heading from "../Heading";
 
 export default function PacientesDetailsView() {
     // Get the patient ID from the URL parameters
@@ -32,6 +33,8 @@ export default function PacientesDetailsView() {
         name: pacienteData?.name ?? "",
         email: pacienteData?.email ?? "",
         phone: pacienteData?.phone!!,
+        dni: pacienteData?.dni ?? "",
+        
     };
 
     // get apointment by patientId
@@ -76,9 +79,7 @@ export default function PacientesDetailsView() {
 
             <div className="p-4 max-w-6xl mx-auto">
                 <div className="flex flex-row justify-between items-center">
-                    <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-4">
-                        Detalles del Paciente
-                    </h1>
+                    <Heading>Detalles del Paciente</Heading>
 
                     <div className="flex shrink-0 items-center gap-x-6">
                         <Menu as="div" className="relative flex-none">
@@ -126,15 +127,22 @@ export default function PacientesDetailsView() {
                     <h2 className="text-xl font-semibold text-gray-700 mb-4 border-b pb-2">
                         {pacienteData.name}
                     </h2>
-                    <div className="space-y-3">
-                        <p className="text-gray-600">
-                            <strong className="font-medium text-gray-700">Email:</strong>{" "}
-                            {pacienteData.email}
-                        </p>
-                        <p className="text-gray-600">
-                            <strong className="font-medium text-gray-700">Teléfono:</strong>{" "}
-                            {pacienteData.phone}
-                        </p>
+                     <div className="space-y-4">
+                        <div className="flex items-center text-gray-700">
+                            <MdEmail className="h-5 w-5 mr-3 text-indigo-500" />
+                            <span className="font-semibold">Email:</span>
+                            <span className="ml-2">{pacienteData.email}</span>
+                        </div>
+                        <div className="flex items-center text-gray-700">
+                            <MdPhone className="h-5 w-5 mr-3 text-teal-500" />
+                            <span className="font-semibold">Teléfono:</span>
+                            <span className="ml-2">{pacienteData.phone}</span>
+                        </div>
+                        <div className="flex items-center text-gray-700">
+                            <MdPerson className="h-5 w-5 mr-3 text-purple-500" />
+                            <span className="font-semibold">DNI:</span>
+                            <span className="ml-2">{pacienteData.dni}</span>
+                        </div>
                     </div>
 
                     <div className="mt-8">

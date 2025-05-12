@@ -23,12 +23,13 @@ export const userSchema = authSchema.pick({
 }).extend({
     id: z.number(),
     phone: z.string().nullable(),
-    role: z.string()
+    role: z.string(),
+    dni: z.string().optional(),
 })
 
 export type User = z.infer<typeof userSchema>
 // used in the form to create a user by admin
-export type UserForm = Pick<User, 'name' | 'email' | 'phone'>
+export type UserForm = Pick<User, 'name' | 'email' | 'phone' | 'dni'>;
 
 
 
@@ -79,10 +80,11 @@ export const pacienteSchema = z.object({
     passwordConfirmation: z.string().min(6, { message: 'La confirmación de contraseña es requerida.' }),
     phone: z.string(),
     role: z.literal('paciente'),
+    dni: z.string().optional(),
 })
 
 export type Paciente = z.infer<typeof pacienteSchema>
-export type PacienteFormData = Pick<Paciente, 'name' | 'email' | 'phone'>;
+export type PacienteFormData = Pick<Paciente, 'name' | 'email' | 'phone' | 'dni'>;
 
 
 /** Cita */
@@ -139,3 +141,9 @@ export type Cita = z.infer<typeof citaSchema>
 export type CitaFormData = Pick<Cita, 'medicId' | 'patientId' | 'date' | 'description'>;
 export const citaStatusSchema = z.enum(['pending', 'confirmed', 'completed', 'cancelled'])
 export type CitaStatus = z.infer<typeof citaStatusSchema>
+
+
+// Schema for response succes from the API
+export const responseSuccessSchema = z.object({
+    message: z.string()
+})

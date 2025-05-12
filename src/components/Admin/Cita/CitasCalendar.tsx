@@ -3,6 +3,7 @@ import { FaPlus } from "react-icons/fa";
 import AddCitaModal from "./AddCitaModal";
 import Calendar from "./Calendar";
 import CitaDetailsModal from "./CitaDetailsModal";
+import Heading from "../Heading";
 
 
 export default function CitasCalendar() {
@@ -14,7 +15,7 @@ export default function CitasCalendar() {
             {/* Contenedor principal con padding mejorado y sombra sutil */}
             <div className="p-6 space-y-6">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                    <h1 className="text-4xl font-extrabold text-gray-900">Calendario de Citas</h1>
+                    <Heading>Calendario de Citas</Heading>
 
                     <div className="flex items-center gap-3">
                         <Link

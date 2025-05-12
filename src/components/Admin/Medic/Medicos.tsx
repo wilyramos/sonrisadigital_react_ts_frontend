@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import { useState } from "react"; // Importa useState
 import { useMutation } from "@tanstack/react-query";
 import type { MedicListArrayResponse } from "@/types/index";
+import Heading from "../Heading";
 
 export default function Medicos() {
     const navigate = useNavigate();
@@ -70,7 +71,7 @@ export default function Medicos() {
         <>
             <div className="p-10">
                 <div className="flex justify-between items-center mb-8">
-                    <h1 className="text-3xl font-semibold text-gray-800">Gestión de Odontólogos</h1>
+                    <Heading>Lista de Médicos</Heading>
                     <button
                         type="button"
                         className="flex items-center px-4 py-2 bg-teal-500 text-white rounded-lg shadow-lg hover:bg-teal-700 transition duration-200 transform hover:scale-105 cursor-pointer"

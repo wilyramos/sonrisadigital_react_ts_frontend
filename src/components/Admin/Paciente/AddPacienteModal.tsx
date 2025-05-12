@@ -5,10 +5,10 @@ import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { toast } from 'react-toastify';
-import { registerUserByAdmin } from '@/api/AuthAPI'; 
+import { registerUserByAdmin } from '@/api/AuthAPI';
 import PacienteForm from './PacienteForm';
 import { useQueryClient } from '@tanstack/react-query';
-import type { PacienteFormData } from '@/types/index'; 
+import type { PacienteFormData } from '@/types/index';
 
 export default function AddPacienteModal() {
     const navigate = useNavigate();
@@ -17,7 +17,7 @@ export default function AddPacienteModal() {
     const show = !!queryparams.get('newPaciente');
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm<PacienteFormData>({
-        defaultValues: { name: '', email: '', phone: '' }, 
+        defaultValues: { name: '', email: '', phone: '' },
     });
 
     const queryClient = useQueryClient();
@@ -28,9 +28,9 @@ export default function AddPacienteModal() {
             toast.error(error.message || 'Error al crear el paciente.');
         },
         onSuccess: (data) => {
-            console.log(data);
-            toast.success(data || 'Paciente creado con éxito.');
-            queryClient.invalidateQueries({ queryKey: ['pacientes'] }); 
+            // console.log(data);
+            toast.success(data?.message);
+            queryClient.invalidateQueries({ queryKey: ['pacientes'] });
             navigate(location.pathname, { replace: true });
             reset();
         },

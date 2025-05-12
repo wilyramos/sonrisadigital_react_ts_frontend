@@ -11,6 +11,7 @@ import { useMutation } from "@tanstack/react-query";
 import { UserListResponse } from "@/types/index"; // Asegúrate de que la ruta sea correcta
 
 import { FaSearch } from "react-icons/fa";
+import Heading from "../Heading";
 
 export default function Pacientes() {
     const navigate = useNavigate();
@@ -86,7 +87,7 @@ export default function Pacientes() {
             <>
                 <div className="p-10">
                     <div className="flex justify-between items-center mb-8">
-                        <h1 className="text-3xl font-semibold text-gray-800">Gestión de Pacientes</h1>
+                        <Heading>Lista de Pacientes</Heading>
                         <button
                             type="button"
                             className="flex items-center px-4 py-2 bg-teal-500 text-white rounded-lg shadow-lg hover:bg-teal-700 transition duration-200 transform hover:scale-105 cursor-pointer"

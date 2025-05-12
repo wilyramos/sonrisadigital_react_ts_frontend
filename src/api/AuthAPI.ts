@@ -3,6 +3,7 @@ import { isAxiosError } from "axios";
 import { AuthLoginForm, type CheckPasswordForm } from "@/types/index";
 import { userSchema, userListSchema, userListArraySchema } from "@/types/index";
 import { UserForm } from "@/types/index";
+import { responseSuccessSchema } from "@/types/index";
 
 
 
@@ -25,8 +26,13 @@ export async function registerUser(formData: AuthLoginForm) {
 export async function registerUserByAdmin(formData: UserForm) {
     try {
         const url = "/auth/create-user-by-admin";
-        const { data } = await api.post<string>(url, formData);
-        return data;
+        const response = await api.post(url, formData);
+        const data = responseSuccessSchema.safeParse(response.data);
+        if (data.success) {
+            return data.data;
+        } else {
+            throw new Error("Error al registrar usuarioo");
+        }
     } catch (error) {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.message || "Error al registrar usuario");
@@ -167,7 +173,7 @@ export async function updateUser({ id, formData }: { id: string; formData: UserF
     try {
         const url = `/auth/update-user/${id}`;
         const { data } = await api.put(url, formData);
-        console.log(data);
+        // console.log(data);
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {

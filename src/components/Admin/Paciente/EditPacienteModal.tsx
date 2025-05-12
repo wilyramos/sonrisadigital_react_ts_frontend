@@ -21,6 +21,7 @@ export default function EditPacienteModal({ data }: PropsEditPacienteModal) {
         name: data?.name || "",
         email: data?.email || "",
         phone: data?.phone || "",
+        dni: data?.dni || "",
     }
 
     const params = useParams();
@@ -54,9 +55,7 @@ export default function EditPacienteModal({ data }: PropsEditPacienteModal) {
 
 
     const handleEditPaciente = async (formData: PacienteFormData) => {
-        
         await updatePacienteMutation.mutateAsync({ id: params.pacienteId!, formData });
-
     }
 
     const closeModal = () => {
