@@ -43,9 +43,7 @@ export async function authenticateUser(formData: AuthLoginForm) {
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
-            throw new Error(error.response.data.error);
-        } else {
-            throw new Error("Error al iniciar sesión");
+            throw new Error(error.response.data.message || "Error al iniciar sesión");
         }
     }
 }

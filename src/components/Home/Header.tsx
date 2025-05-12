@@ -10,6 +10,11 @@ const fadeInUp = {
 
 export default function Header() {
     return (
+        <>
+        <div>
+            <p>Horario: <span className="text-blue-500">Lunes a Viernes, 9am - 6pm</span></p>
+        </div>
+        
         <div className="py-16 lg:py-24 bg-white">
             <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center px-4">
                 {/* Text Content */}
@@ -92,5 +97,7 @@ export default function Header() {
                 </motion.div>
             </div>
         </div>
+
+        </>
     );
 }

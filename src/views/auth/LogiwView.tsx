@@ -4,16 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthLoginForm } from "@/types/index";
 import { useMutation } from "@tanstack/react-query";
 import { authenticateUser } from "@/api/AuthAPI";
-// import { toast } from "sonner";
-import ErrorMessage from "@/components/ErrorMessage";
-import { motion } from "framer-motion";
 import { toast } from 'react-toastify';
-
-
-const fadeUp = {
-    hidden: { opacity: 0, y: 40 },
-    visible: { opacity: 1, y: 0 },
-};
+import ErrorMessage from "@/components/ErrorMessage";
 
 export default function ModernLoginView() {
     const [isLoading, setIsLoading] = useState(false);
@@ -35,7 +27,7 @@ export default function ModernLoginView() {
         onError: (error) => {
             console.error(error);
             setIsLoading(false);
-            toast.error(error.message || "Error al iniciar sesión f");
+            toast.error(error.message || "Error al iniciar sesión");
         },
         onSuccess: () => {
             setIsLoading(false);
@@ -47,19 +39,13 @@ export default function ModernLoginView() {
     const handleLogin = (formData: AuthLoginForm) => {
         setIsLoading(true);
         toast.info("Iniciando sesión...");
-        console.log(formData);
+        // console.log(formData);
         mutate(formData);
     };
 
     return (
         <div className="flex items-center justify-center">
-            <motion.div
-                initial="hidden"
-                animate="visible"
-                transition={{ duration: 0.6, ease: "easeOut" }}
-                variants={fadeUp}
-                className="relative bg-white p-10 w-full max-w-md shadow-xl rounded-3xl border border-gray-100"
-            >
+            <div className="relative bg-white p-10 w-full max-w-md shadow-xl rounded-3xl border border-gray-100">
                 <div className="mb-6 text-center">
                     <img src="/logo.svg" alt="Logo" className="w-20 h-20 mx-auto mb-4" />
                     <h1 className="text-3xl font-bold text-teal-600 mb-2">Iniciar Sesión</h1>
@@ -75,8 +61,7 @@ export default function ModernLoginView() {
                             type="email"
                             id="email"
                             {...register("email", { required: "Este campo es obligatorio" })}
-                            className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-400 transition ${errors.email ? "border-red-500" : "border-gray-300"
-                                }`}
+                            className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-400 ${errors.email ? "border-red-500" : "border-gray-300"}`}
                             placeholder="Correo electrónico"
                         />
                         {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
@@ -90,18 +75,14 @@ export default function ModernLoginView() {
                             type="password"
                             id="password"
                             {...register("password", { required: "Este campo es obligatorio" })}
-                            className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-400 transition ${errors.password ? "border-red-500" : "border-gray-300"
-                                }`}
+                            className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-400 ${errors.password ? "border-red-500" : "border-gray-300"}`}
                             placeholder="Contraseña"
                         />
                         {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
                     </div>
 
                     <div className="flex justify-end">
-                        <Link
-                            to="/forgot-password"
-                            className="text-sm text-teal-500 hover:underline font-medium"
-                        >
+                        <Link to="/forgot-password" className="text-sm text-teal-500 hover:underline font-medium">
                             ¿Olvidaste tu contraseña?
                         </Link>
                     </div>
@@ -109,10 +90,7 @@ export default function ModernLoginView() {
                     <button
                         type="submit"
                         disabled={isLoading}
-                        className={`w-full py-3 font-semibold text-white rounded-xl transition-all duration-300 ${isLoading
-                                ? "bg-teal-400 cursor-not-allowed opacity-60"
-                                : "bg-teal-500 hover:bg-teal-600"
-                            }`}
+                        className={`w-full py-3 font-semibold text-white rounded-xl ${isLoading ? "bg-teal-400 cursor-not-allowed opacity-60" : "bg-teal-500 hover:bg-teal-600"}`}
                     >
                         {isLoading ? "Cargando..." : "Iniciar Sesión"}
                     </button>
@@ -126,7 +104,7 @@ export default function ModernLoginView() {
                         </Link>
                     </p>
                 </div>
-            </motion.div>
+            </div>
         </div>
     );
 }
