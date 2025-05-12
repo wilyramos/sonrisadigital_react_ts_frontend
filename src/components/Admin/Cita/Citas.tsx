@@ -13,6 +13,7 @@ import { getCitasSearch } from "@/api/CitaAPI";
 import type { CitaList } from "@/types/index";
 import CitaDetailsModal from "./CitaDetailsModal";
 import Heading from "../Heading";
+import DeleteCitaModal from "./DeleteCitaModal";
 export default function Citas() {
 
     // Search 
@@ -110,6 +111,7 @@ export default function Citas() {
                 <AddCitaModal />
             </div>
             <CitaDetailsModal />
+            <DeleteCitaModal />
         </>
 
     );

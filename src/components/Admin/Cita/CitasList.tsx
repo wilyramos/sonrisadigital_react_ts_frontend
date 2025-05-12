@@ -1,4 +1,4 @@
-import { FaCalendarAlt } from "react-icons/fa";
+import { FaCalendarAlt, FaEye } from "react-icons/fa";
 import { FaEdit } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa6";
 import { formatDateOnly, formatTimeOnly } from '@/utils/formatDate';
@@ -25,8 +25,8 @@ export default function CitasList({ citas }: CitasListProps) {
             {citas.map((cita) => (
                 <li
                     key={cita.id}
-                    className="bg-white rounded-3xl shadow-md p-3 flex items-center gap-x-2 hover:shadow-lg transition-all duration-200 cursor-pointer"
-                    onClick={() => navigate(`/citas?viewCita=${cita.id}`)}
+                    className="bg-white rounded-3xl shadow-md p-3 flex items-center gap-x-2 hover:shadow-lg transition-all duration-200"
+                    
                 >
                     <div className="flex-shrink-0">
                         <div className="h-8 w-8 rounded-full bg-teal-50 text-teal-500 flex items-center justify-center text-sm font-medium">
@@ -57,10 +57,23 @@ export default function CitasList({ citas }: CitasListProps) {
                         </div>
                     </div>
 
-                    <button className="ml-auto text-sm text-blue-500 hover:text-blue-700">
+                    <button 
+                        className="text-sm text-teal-500 hover:text-teal-700"
+                        onClick={() => navigate(`/citas?viewCita=${cita.id}`)}
+                    >
+                        <FaEye className="inline-block mr-1" size={14} />
+                    </button>
+
+                    <button 
+                        className="ml-auto text-sm text-blue-500 hover:text-blue-700"
+                        // onClick={() => navigate(`/citas/${cita.id}`)}
+                    >
                         <FaEdit className="inline-block mr-1" size={14} />
                     </button>
-                    <button className="text-sm text-red-500 hover:text-red-700">
+                    <button 
+                        className="text-sm text-red-500 hover:text-red-700"
+                        onClick={() => navigate(location.pathname + `?deleteCita=${cita.id}`)}
+                    >
                         <FaTrash className="inline-block mr-1" size={14} />
                     </button>
                 </li>

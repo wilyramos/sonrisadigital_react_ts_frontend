@@ -115,3 +115,17 @@ export async function getCitasByPatientId(patientId: string) {
         }
     }
 }
+
+export async function deleteCitaById(citaId: string) {
+    
+    try {
+        const url = `/cita/${citaId}`;
+        const { data } = await api.delete(url);
+        return data;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error || "Error al eliminar la cita");
+        }
+    }
+
+}
