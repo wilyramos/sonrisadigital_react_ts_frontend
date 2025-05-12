@@ -52,10 +52,16 @@ export default function Footer() {
                 <div>
                     <h4 className="text-white text-lg font-semibold mb-3">Síguenos</h4>
                     <div className="flex space-x-4">
-                        <a href="#" aria-label="Facebook" className="hover:text-blue-500 transition">
+                        <a href="https://www.facebook.com/SonrisaDigital" aria-label="Facebook" className="hover:text-blue-500 transition"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
                             <FaFacebookF size={22} />
                         </a>
-                        <a href="#" aria-label="Instagram" className="hover:text-green-500 transition">
+                        <a href="https://www.instagram.com/SonrisaDigital" aria-label="Instagram" className="hover:text-green-500 transition"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
                             <FaInstagram size={22} />
                         </a>
                     </div>
