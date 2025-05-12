@@ -71,7 +71,7 @@ export default function RegisterView() {
                 animate="visible"
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 variants={fadeUp}
-                className="relative bg-white p-10 w-full max-w-md shadow-xl rounded-3xl border border-gray-100"
+                className="relative bg-white p-10 w-full max-w-md "
             >
 
                 <div className="relative bg-white px-8 w-full max-w-md">

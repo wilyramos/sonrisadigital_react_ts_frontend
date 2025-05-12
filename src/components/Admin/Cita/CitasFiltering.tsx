@@ -39,8 +39,8 @@ export default function CitasFiltering() {
 
     return (
         <>
-            <div className=""> 
-                <section className="w-full container grid grid-cols-1 md:grid-cols-4 gap-2 border-gray-200"> 
+            <div className="">
+                <section className="w-full container grid grid-cols-1 md:grid-cols-4 gap-2">
                     {/* Filtros */}
                     <aside className="md:col-span-1 border-r-2 border-gray-300 p-2">
                         <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">

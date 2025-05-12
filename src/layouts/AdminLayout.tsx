@@ -35,7 +35,7 @@ export default function AdminLayout() {
                 </div>
                 </div>   
 
-                <main className="flex-1 p-4 overflow-y-auto">
+                <main className="flex-1 p-10 overflow-y-auto">
                     {isLoading ? (
                         <div className="flex items-center justify-center h-full">
                             <ClipLoader color="#000" size={50} />

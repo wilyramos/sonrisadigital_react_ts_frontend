@@ -69,7 +69,7 @@ export default function Medicos() {
 
     return (
         <>
-            <div className="p-10">
+            <div className="">
                 <div className="flex justify-between items-center mb-8">
                     <Heading>Lista de Médicos</Heading>
                     <button

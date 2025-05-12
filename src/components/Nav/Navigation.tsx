@@ -59,7 +59,7 @@ export default function Navigation({ isPrivate }: { isPrivate?: boolean }) {
                         <Link to="/servicios" className="text-gray-700 hover:text-teal-600 focus:outline-none">
                             Servicios
                         </Link>
-                        <Transition
+                        {/* <Transition
                             show={isServiciosOpen}
                             enter="transition-opacity duration-150"
                             enterFrom="opacity-0"
@@ -78,9 +78,9 @@ export default function Navigation({ isPrivate }: { isPrivate?: boolean }) {
                                 <Link to="/servicios/servicio3" className="block px-4 py-2 text-gray-700 hover:bg-gray-100 focus:outline-none">
                                     Servicio 3
                                 </Link>
-                                {/* Add more sub-links here */}
+                                
                             </div>
-                        </Transition>
+                        </Transition> */}
                     </div>
                     {isPrivate && (
                         <Link to="/dashboard" className="text-gray-700 hover:text-teal-600 focus:outline-none">

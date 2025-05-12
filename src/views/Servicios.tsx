@@ -47,8 +47,8 @@ const dataServicios = [
 
 export default function Servicios() {
     return (
-        <section className="py-12 bg-white">
-            <div className="container mx-auto px-6">
+        <section className="">
+            <div className="container mx-auto px-4 md:px-8">
                 <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-600 mb-10">
                     ¿Qué <span className="text-green-500">tratamiento dental</span> necesitas?
                 </h2>

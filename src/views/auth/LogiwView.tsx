@@ -45,7 +45,7 @@ export default function ModernLoginView() {
 
     return (
         <div className="flex items-center justify-center">
-            <div className="relative bg-white p-10 w-full max-w-md shadow-xl rounded-3xl border border-gray-100">
+            <div className="relative bg-white p-10 w-full max-w-md  ">
                 <div className="mb-6 text-center">
                     <img src="/logo.svg" alt="Logo" className="w-20 h-20 mx-auto mb-4" />
                     <h1 className="text-3xl font-bold text-teal-600 mb-2">Iniciar Sesión</h1>
