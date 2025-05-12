@@ -7,13 +7,8 @@ export default function home() {
     return (
         <>
             <Header />
-
             <Servicios />
-
-            <About />
-
-           
-
+            <About />           
         </>
     )
 }

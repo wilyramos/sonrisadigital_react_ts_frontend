@@ -37,8 +37,6 @@ export default function App() {
                     <Route path="/login" element={<LogiwView />} />
                     <Route path="/register" element={<RegisterView />} />
                     <Route path="/forgot-password" element={<h1>Forgot Password</h1>} />
-
-
                 </Route>
 
                 <Route element={<PacienteLayout />}>
