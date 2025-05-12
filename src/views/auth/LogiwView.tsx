@@ -17,8 +17,8 @@ export default function ModernLoginView() {
         formState: { errors },
     } = useForm<AuthLoginForm>({
         defaultValues: {
-            email: "",
-            password: "",
+            email: "demo@correo.com",
+            password: "demo123",
         },
     });
 
