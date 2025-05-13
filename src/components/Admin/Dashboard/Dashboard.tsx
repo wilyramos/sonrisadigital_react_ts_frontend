@@ -2,36 +2,74 @@ import { CalendarDays, Users, CheckCircle, XCircle, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
 import CitasFiltering from "../Cita/CitasFiltering";
 import Heading from "../Heading";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart , Bar } from 'recharts';
 
 const data = [
-    { label: "Citas Programadas", icon: <CalendarDays className="text-blue-500 w-6 h-6" />, value: 12 },
-    { label: "Citas Completadas", icon: <CheckCircle className="text-green-500 w-6 h-6" />, value: 8 },
-    { label: "Citas Canceladas", icon: <XCircle className="text-red-500 w-6 h-6" />, value: 2 },
-    { label: "Citas Pendientes", icon: <Clock className="text-yellow-500 w-6 h-6" />, value: 2 },
-    { label: "Pacientes Registrados", icon: <Users className="text-purple-500 w-6 h-6" />, value: 50 },
+    { name: 'lunes', citas: 12 },
+    { name: 'martes', citas: 8 },
+    { name: 'miércoles', citas: 15 },
+    { name: 'jueves', citas: 10 },
+    { name: 'viernes', citas: 20 },
+    { name: 'sábado', citas: 25 },
+    { name: 'domingo', citas: 30 },
+];
+
+const data2 = [
+    { name: 'Ene', citas: 12 },
+    { name: 'Feb', citas: 8 },
+    { name: 'Mar', citas: 15 },
+    { name: 'Abr', citas: 10 },
+    { name: 'May', citas: 20 },
+    { name: 'Jun', citas: 25 },
+    { name: 'Jul', citas: 30 },
+    { name: 'Ago', citas: 35 },
+    { name: 'Sep', citas: 40 },
+    { name: 'Oct', citas: 45 },
+    { name: 'Nov', citas: 50 },
+    { name: 'Dic', citas: 55 },
 ];
 
 export default function Dashboard() {
     return (
-        <div className="p-4 sm:p-6 space-y-6">
-            <div>
-                <Heading>Dashboard</Heading>
-                <p className="text-muted-foreground text-sm">Resumen general y gestión de citas.</p>
+        <>
+            <div className="mb-6 md:mb-10">
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 md:mb-0">
+                    <Heading>Dashboard</Heading>
+                </div>
+                <div>
+                    <Heading>Grafica de citas de la semana</Heading>
+
+                    <div>
+                        <ResponsiveContainer width="100%" height={300}>
+                            <BarChart data={data}>
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="name" />
+                                <YAxis />
+                                <Tooltip />
+                                <Bar dataKey="citas" fill="#8884d8" />
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </div>
+
+                </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                {data.map((item, i) => (
-                    <div
-                        key={i}
-                        className="bg-white rounded-2xl shadow p-4 flex items-center justify-between"
-                    >
-                        <div className="flex items-center gap-3">
-                            {item.icon}
-                            <p className="text-sm text-gray-500">{item.label}</p>
-                        </div>
-                        <p className="text-xl font-bold text-gray-800">{item.value}</p>
-                    </div>
-                ))}
+            <div className="mb-6 md:mb-10">
+                <div className="mb-4">
+                    <Heading>Estadísticas</Heading>
+                    <p className="text-gray-500 text-sm">Gráficos y análisis de citas.</p>
+                </div>
+                <div className="w-full overflow-auto">
+                    <ResponsiveContainer width="100%" height={300}>
+                        <LineChart data={data2}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="name" />
+                            <YAxis />
+                            <Tooltip />
+                            <Line type="monotone" dataKey="citas" stroke="#8884d8" />
+                        </LineChart>
+                    </ResponsiveContainer>
+                </div>
             </div>
 
             <div>
@@ -46,6 +84,6 @@ export default function Dashboard() {
                 </div>
                 <CitasFiltering />
             </div>
-        </div>
+        </>
     );
 }
