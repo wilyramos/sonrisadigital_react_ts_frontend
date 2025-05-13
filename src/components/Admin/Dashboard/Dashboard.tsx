@@ -1,16 +1,17 @@
 import { Link } from "react-router-dom";
 import CitasFiltering from "../Cita/CitasFiltering";
-import Heading from "../Heading";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart , Bar } from 'recharts';
+import {
+    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar
+} from 'recharts';
 
 const data = [
-    { name: 'lunes', citas: 12 },
-    { name: 'martes', citas: 8 },
-    { name: 'miércoles', citas: 15 },
-    { name: 'jueves', citas: 10 },
-    { name: 'viernes', citas: 20 },
-    { name: 'sábado', citas: 25 },
-    { name: 'domingo', citas: 30 },
+    { name: 'Lun', citas: 12 },
+    { name: 'Mar', citas: 8 },
+    { name: 'Mié', citas: 15 },
+    { name: 'Jue', citas: 10 },
+    { name: 'Vie', citas: 20 },
+    { name: 'Sáb', citas: 25 },
+    { name: 'Dom', citas: 30 },
 ];
 
 const data2 = [
@@ -30,59 +31,54 @@ const data2 = [
 
 export default function Dashboard() {
     return (
-        <>
-            <div className="mb-6 md:mb-10">
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 md:mb-0">
-                    <Heading>Dashboard</Heading>
-                </div>
-                <div>
-                    <Heading>Grafica de citas de la semana</Heading>
+        <div className="space-y-10">
 
-                    <div>
-                        <ResponsiveContainer width="100%" height={300}>
-                            <BarChart data={data}>
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="name" />
-                                <YAxis />
-                                <Tooltip />
-                                <Bar dataKey="citas" fill="#8884d8" />
-                            </BarChart>
-                        </ResponsiveContainer>
-                    </div>
-
+            {/* Gráficos */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Gráfico semanal */}
+                <div className="bg-white shadow-md rounded-2xl p-6">
+                    <h2 className="text-lg font-semibold text-gray-800 mb-2">Citas por Día (Semana Actual)</h2>
+                    <p className="text-sm text-gray-500 mb-4">Cantidad de citas por día.</p>
+                    <ResponsiveContainer width="100%" height={300}>
+                        <BarChart data={data}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="name" />
+                            <YAxis />
+                            <Tooltip />
+                            <Bar dataKey="citas" fill="#14b8a6" radius={[6, 6, 0, 0]} />
+                        </BarChart>
+                    </ResponsiveContainer>
                 </div>
-            </div>
 
-            <div className="mb-6 md:mb-10">
-                <div className="mb-4">
-                    <Heading>Estadísticas</Heading>
-                    <p className="text-gray-500 text-sm">Gráficos y análisis de citas.</p>
-                </div>
-                <div className="w-full overflow-auto">
+                {/* Gráfico mensual */}
+                <div className="bg-white shadow-md rounded-2xl p-6">
+                    <h2 className="text-lg font-semibold text-gray-800 mb-2">Citas por Mes (Último Año)</h2>
+                    <p className="text-sm text-gray-500 mb-4">Tendencia mensual de citas registradas.</p>
                     <ResponsiveContainer width="100%" height={300}>
                         <LineChart data={data2}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="name" />
                             <YAxis />
                             <Tooltip />
-                            <Line type="monotone" dataKey="citas" stroke="#8884d8" />
+                            <Line type="monotone" dataKey="citas" stroke="#6366f1" strokeWidth={2} />
                         </LineChart>
                     </ResponsiveContainer>
                 </div>
             </div>
 
-            <div>
-                <div className="flex items-center justify-between mb-3">
-                    <Heading>Últimas Citas</Heading>
+            {/* Últimas citas */}
+            <div className="bg-white shadow-md rounded-2xl p-6">
+                <div className="flex items-center justify-between mb-4">
+                    <h2 className="text-lg font-semibold text-gray-800">Últimas Citas</h2>
                     <Link
                         to="/citas"
-                        className="text-sm font-medium text-blue-600 hover:underline"
+                        className="text-sm font-medium text-teal-600 hover:underline"
                     >
                         Ver todas
                     </Link>
                 </div>
                 <CitasFiltering />
             </div>
-        </>
+        </div>
     );
 }
