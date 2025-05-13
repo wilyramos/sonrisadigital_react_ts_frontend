@@ -13,6 +13,7 @@ export default function Footer() {
                     </div>
                     <p className="text-sm leading-relaxed">
                         Tu clínica dental en Cañete con tecnología avanzada y atención personalizada.
+                        <span> Encuentranos en San Vicente de Cañete</span>
                     </p>
                 </div>
 
@@ -25,10 +26,10 @@ export default function Footer() {
                         rel="noopener noreferrer"
                         className="flex items-center text-sm gap-2 hover:text-blue-500 transition"
                     >
-                        <FaMapMarkerAlt className="text-blue-500" /> Av. Libertadores 123, San Vicente de Cañete
+                        <FaMapMarkerAlt className="text-blue-500" /> Av. 2 de mayo 123, San Vicente de Cañete
                     </a>
                     <p className="flex items-center text-sm gap-2">
-                        <FaPhoneAlt className="text-teal-500" /> (01) 5823344 / 987 654 321
+                        <FaPhoneAlt className="text-teal-500" /> (01) 6523265 / 988444654
                     </p>
                     <p className="flex items-center text-sm gap-2">
                         <FaClock className="text-green-500" /> Lun-Vie: 9:00-13h / 16-20h | Sáb: 9:00-14h

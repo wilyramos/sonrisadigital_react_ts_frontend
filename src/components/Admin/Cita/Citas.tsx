@@ -39,7 +39,7 @@ export default function Citas() {
             citasMutation.mutate(searchTerm.trim());
         } else {
             // Si no hay término de búsqueda, puedes mostrar un mensaje o realizar otra acción
-            console.log("Por favor, ingresa un término de búsqueda.");
+            toast.info('Por favor, ingresa un término de búsqueda.');
         }
 
     };

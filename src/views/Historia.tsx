@@ -6,7 +6,7 @@ export default function Historia() {
                 {/* Imagen decorativa */}
                 <div className="relative w-full h-64 md:h-96">
                     <img
-                        src="/5 (2).webp"
+                        src="/5.webp"
                         alt="Nuestra Historia"
                         className="w-full h-full object-cover rounded-3xl shadow-lg"
                     />

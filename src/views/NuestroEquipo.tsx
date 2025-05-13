@@ -4,19 +4,19 @@ const equipo = [
         nombre: "Dr. Juan Pérez",
         cargo: "Director Clínico",
         especialidad: "Odontología Estética",
-        imagen: "/medic1.jpg",
+        imagen: "/medic1.webp",
     },
     {
         nombre: "Dra. María López",
         cargo: "Odontóloga General",
         especialidad: "Rehabilitación Oral",
-        imagen: "/medico.jpg",
+        imagen: "/medico.webp",
     },
     {
         nombre: "Dr. Carlos Gómez",
         cargo: "Especialista en Ortodoncia",
         especialidad: "Ortodoncia y Ortopedia Maxilar",
-        imagen: "/medic3.jpg",
+        imagen: "/medic3.webp",
     },
 ];
 

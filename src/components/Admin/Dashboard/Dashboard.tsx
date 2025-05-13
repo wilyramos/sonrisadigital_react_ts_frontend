@@ -1,64 +1,51 @@
 import { CalendarDays, Users, CheckCircle, XCircle, Clock } from "lucide-react";
-import CitasFiltering from "../Cita/CitasFiltering";
 import { Link } from "react-router-dom";
+import CitasFiltering from "../Cita/CitasFiltering";
 import Heading from "../Heading";
+
+const data = [
+    { label: "Citas Programadas", icon: <CalendarDays className="text-blue-500 w-6 h-6" />, value: 12 },
+    { label: "Citas Completadas", icon: <CheckCircle className="text-green-500 w-6 h-6" />, value: 8 },
+    { label: "Citas Canceladas", icon: <XCircle className="text-red-500 w-6 h-6" />, value: 2 },
+    { label: "Citas Pendientes", icon: <Clock className="text-yellow-500 w-6 h-6" />, value: 2 },
+    { label: "Pacientes Registrados", icon: <Users className="text-purple-500 w-6 h-6" />, value: 50 },
+];
 
 export default function Dashboard() {
     return (
-        <div className="">
+        <div className="p-4 sm:p-6 space-y-6">
             <div>
                 <Heading>Dashboard</Heading>
-                <p className="text-gray-600 text-sm">Resumen general y gestión de citas.</p>
+                <p className="text-muted-foreground text-sm">Resumen general y gestión de citas.</p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
-                <div className="bg-white rounded-xl shadow-lg p-2 flex justify-between items-center">
-                    <div className="flex gap-2">
-                        <CalendarDays className="text-blue-500 w-7 h-7" />
-                        <p className="text-sm text-gray-500 mb-1">Citas Programadas</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                {data.map((item, i) => (
+                    <div
+                        key={i}
+                        className="bg-white rounded-2xl shadow p-4 flex items-center justify-between"
+                    >
+                        <div className="flex items-center gap-3">
+                            {item.icon}
+                            <p className="text-sm text-gray-500">{item.label}</p>
+                        </div>
+                        <p className="text-xl font-bold text-gray-800">{item.value}</p>
                     </div>
-                    <p className="text-2xl font-semibold text-gray-800 ">12</p>
-                </div>
-                <div className="bg-white rounded-xl shadow-lg p-2 flex justify-between items-center">
-                    <div className="flex gap-2">
-                        <CheckCircle className="text-green-500 w-7 h-7" />
-                        <p className="text-sm text-gray-500 mb-1">Citas Completadas</p>
-                    </div>
-                    <p className="text-2xl font-semibold text-gray-800 ">8</p>
-                </div>
-                <div className="bg-white rounded-xl shadow-lg p-2 flex justify-between items-center">
-                    <div className="flex gap-2">
-                        <XCircle className="text-red-500 w-7 h-7" />
-                        <p className="text-sm text-gray-500 mb-1">Citas Canceladas</p>
-                    </div>
-                    <p className="text-2xl font-semibold text-gray-800 ">2</p>
-                </div>
-                <div className="bg-white rounded-xl shadow-lg p-2 flex justify-between items-center">
-                    <div className="flex gap-2">
-                        <Clock className="text-yellow-500 w-7 h-7" />
-                        <p className="text-sm text-gray-500 mb-1">Citas Pendientes</p>
-                    </div>
-                    <p className="text-2xl font-semibold text-gray-800 ">2</p>
-                </div>
-                <div className="bg-white rounded-xl shadow-lg p-2 flex justify-between items-center">
-                    <div className="flex gap-2">
-                        <Users className="text-purple-500 w-7 h-7" />
-                        <p className="text-sm text-gray-500 mb-1">Pacientes Registrados</p>
-                    </div>
-                    <p className="text-2xl font-semibold text-gray-800 ">50</p>
-                </div>
+                ))}
             </div>
 
-            <div className="pt-4">
-                <div className="flex items-center justify-between mb-4">
+            <div>
+                <div className="flex items-center justify-between mb-3">
                     <Heading>Últimas Citas</Heading>
-                    <Link to="/citas" className="text-sm font-semibold text-blue-500 hover:text-blue-700">
-                        Ver todas las citas
+                    <Link
+                        to="/citas"
+                        className="text-sm font-medium text-blue-600 hover:underline"
+                    >
+                        Ver todas
                     </Link>
                 </div>
                 <CitasFiltering />
             </div>
-
         </div>
     );
 }

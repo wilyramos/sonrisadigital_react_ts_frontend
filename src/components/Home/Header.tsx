@@ -85,7 +85,7 @@ export default function Header() {
                         transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
                     >
                         <img
-                            src="1.jpg"
+                            src="1.webp"
                             alt="Transforming smiles"
                             className="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full shadow-xl hover:scale-105 transition-transform duration-500"
                             style={{

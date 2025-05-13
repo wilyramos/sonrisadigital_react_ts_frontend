@@ -55,7 +55,7 @@ export default function About() {
             {/* Staff Médico */}
             <div className="container mx-auto px-4 grid gap-8 md:gap-10 md:grid-cols-2 items-center bg-gradient-to-r from-teal-500 to-blue-500 rounded-bl-3xl rounded-tr-4xl p-6 md:p-10 text-white shadow-lg">
                 <img
-                    src="/medico.jpg"
+                    src="/medico.webp"
                     alt="Dr. Juan Pérez"
                     className="w-40 h-40 md:w-64 md:h-64 rounded-full object-cover mx-auto md:mx-0 shadow-2xl border-4 border-white transition-transform duration-500 hover:scale-105"
                 />

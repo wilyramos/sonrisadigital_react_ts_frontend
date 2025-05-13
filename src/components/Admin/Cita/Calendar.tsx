@@ -139,7 +139,7 @@ export default function Calendar() {
             <div className="flex-grow overflow-auto">
                 <BigCalendar
                     localizer={localizer}
-                    events={events} // Usa el estado 'events' que ahora contiene tus citas formateadas
+                    events={events}
                     components={components}
                     date={date}
                     onNavigate={handleNavigate}

@@ -10,7 +10,7 @@ export default function PacienteCard({ paciente }: PacienteCardProps) {
     return (
         <Link
             to={`/pacientes/${paciente.id}`}
-            className="block rounded-md border border-gray-200 p-3 transition hover:bg-gray-50 hover:scale-[1.02] focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none cursor-pointer"
+            className="block px-2 border-b-2 border-gray-100 transition hover:bg-gray-50 hover:scale-[1.02] focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none cursor-pointer"
             title={`Ver detalles de ${paciente.name}`}
         >
             <li className="flex flex-col sm:flex-row sm:items-center gap-2">
