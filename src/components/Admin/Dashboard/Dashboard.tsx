@@ -1,4 +1,3 @@
-import { CalendarDays, Users, CheckCircle, XCircle, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
 import CitasFiltering from "../Cita/CitasFiltering";
 import Heading from "../Heading";
