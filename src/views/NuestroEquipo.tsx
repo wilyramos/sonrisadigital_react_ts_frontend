@@ -22,7 +22,7 @@ const equipo = [
 
 export default function NuestroEquipo() {
     return (
-        <section className="py-10 px-4 bg-gray-50">
+        <section className="py-20 px-4">
             <div className="container mx-auto space-y-8">
                 <h2 className="text-3xl md:text-4xl font-extrabold text-gray-800 text-center">
                     Nuestro Equipo

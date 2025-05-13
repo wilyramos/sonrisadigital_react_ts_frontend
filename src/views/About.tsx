@@ -20,11 +20,11 @@ export default function About() {
     ];
 
     return (
-        <section className="space-y-8 py-4">
+        <section className="space-y-8 py-10">
             {/* ¿Quiénes somos? */}
             <div className="container mx-auto px-4 grid gap-8 md:gap-12 md:grid-cols-2 items-center">
                 <div className="space-y-4 md:space-y-6">
-                    <h2 className="text-2xl md:text-4xl font-extrabold text-gray-800 leading-snug md:leading-tight">
+                    <h2 className="text-2xl md:text-4xl font-bold text-gray-800 leading-snug md:leading-tight">
                         ¿Quiénes somos?
                     </h2>
                     <p className="text-gray-600 text-base md:text-lg">
@@ -35,7 +35,7 @@ export default function About() {
                 <img
                     src="/2.webp"
                     alt="About Us"
-                    className="w-full h-64 md:h-96 rounded-lg object-cover shadow-lg transition-transform duration-500 hover:scale-105"
+                    className="w-full h-64 md:h-80 rounded-lg object-cover shadow-lg transition-transform duration-500 hover:scale-105"
                 />
             </div>
 
