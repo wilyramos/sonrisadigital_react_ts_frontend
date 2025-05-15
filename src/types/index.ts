@@ -113,6 +113,13 @@ export const citaSchema = z.object({
     }),
 })
 
+// Cita es un objeto que contiene la información de la cita
+export const citaListResponseSchema = z.object({
+    appointments: citaSchema.array(),
+    total: z.number(),
+    totalPages: z.number(),
+    currentPage: z.number(),
+}) 
 
 // CitaListResponseByPatientId es un array de los objetos de citaSchema pero sin el patient y medic
 export const citaListResponseByPatientIdSchema = z.array(citaSchema.omit({ patient: true }));
