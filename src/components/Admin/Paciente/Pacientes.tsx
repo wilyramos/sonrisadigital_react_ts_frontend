@@ -20,9 +20,10 @@ export default function Pacientes() {
     const pageParam = queryparams.get("page") || "1";
     const page = parseInt(pageParam, 10);
     const query = queryparams.get("query") || "";
-    const limit = 10;
+    const limit = 10; 
+    // TODO: implementar la paginacion dinamica 
 
-    // React Query - obtener usuarios (incluye búsqueda y paginación)
+    // React Query
     const { data: pacientesData, isLoading, isError } = useQuery({
         queryKey: ["pacientes", page, limit, query],
         queryFn: () => getUsers(page, limit, query),
