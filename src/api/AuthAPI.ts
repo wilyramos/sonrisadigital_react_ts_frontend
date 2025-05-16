@@ -93,7 +93,7 @@ export async function getUsers(){
 
 export async function getUsersWithPagination(page: number, limit: number) {
     try {
-        const url = `/auth/users?limit=${limit}&offset=${page}`;
+        const url = `/auth/users?limit=${limit}&page=${page}`;
         const { data } = await api.get(url);
         const response = userListSchema.safeParse(data);
 
