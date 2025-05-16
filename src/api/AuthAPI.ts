@@ -70,42 +70,31 @@ export async function getUser(){
     }
 }
 
-export async function getUsers(){
+export async function getUsers(page?: number, limit?: number, query?: string) {
     try {
-        const url = "/auth/users";
+
+        const params = new URLSearchParams();
+        params.set("limit", limit?.toString() || "10");
+        params.set("page", page?.toString() || "1");
+        if (query) {
+            params.set("query", query.trim());
+        }
+
+        const url = `/auth/users?${params.toString()}`;
         const { data } = await api.get(url);
-        // console.log(data);
         const response = userListSchema.safeParse(data);
 
         if(response.success) {
             return response.data;
         }
         
-        
     } catch (error) {
         if (isAxiosError(error) && error.response) {
-            throw new Error(error.response.data.error || "Error al obtener los usuarios");
+            throw new Error(error.response.data.error || "Error al obtener los usuarios | F");
         }
     }
 }
 
-// With Pagination
-
-export async function getUsersWithPagination(page: number, limit: number) {
-    try {
-        const url = `/auth/users?limit=${limit}&page=${page}`;
-        const { data } = await api.get(url);
-        const response = userListSchema.safeParse(data);
-
-        if (response.success) {
-            return response.data;
-        }
-    } catch (error) {
-        if (isAxiosError(error) && error.response) {
-            throw new Error(error.response.data.error || "Error al obtener los usuarios");
-        }
-    }
-}
 
 export async function searchUsers(search: string) {
     try {

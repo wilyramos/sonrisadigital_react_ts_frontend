@@ -66,7 +66,7 @@ export default function PacientesDetailsView() {
 
     return (
         <>
-            <div className="p-6 max-w-3xl mx-auto space-y-8 bg-white shadow-lg rounded-lg">
+            <div className="p-10 max-w-5xl mx-auto space-y-2">
                 <div className="flex justify-between items-center">
                     <Heading>Historial Médico - {pacienteData.name}</Heading>
 
