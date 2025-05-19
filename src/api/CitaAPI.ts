@@ -141,3 +141,15 @@ export async function getAppointmentsReportWeekly() {
         }
     }
 }
+
+export async function getAppointmentsReportMonthly() {
+    try {
+        const url = `/cita/report/monthly`;
+        const { data } = await api.get(url);
+        return data;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error || "Error al obtener el reporte mensual de citas");
+        }
+    }
+}

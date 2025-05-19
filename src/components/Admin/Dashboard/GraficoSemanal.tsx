@@ -22,8 +22,7 @@ export default function GraficoSemanal() {
     return (
         <>
             <div className="bg-white shadow-md rounded-2xl p-6">
-                <h2 className="text-lg font-semibold text-gray-800 mb-2">Citas por Día (Semana Actual)</h2>
-                <p className="text-sm text-gray-500 mb-4">Cantidad de citas por día.</p>
+                <h2 className="text-lg font-semibold text-gray-800 mb-2">Citas por Día (Semana Actual) <span>Desde {new Date().toLocaleDateString()} hasta {new Date(new Date().setDate(new Date().getDate() + 6)).toLocaleDateString()}</span></h2>
                 <ResponsiveContainer width="100%" height={300}>
                     <BarChart data={data}>
                         <CartesianGrid strokeDasharray="3 3" />
