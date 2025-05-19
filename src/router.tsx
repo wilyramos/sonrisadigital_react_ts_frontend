@@ -17,6 +17,7 @@ import PacientesDetailsView from "./components/Admin/Paciente/PacientesDetailsVi
 import Historia from "./views/Historia";
 import NuestroEquipo from "./views/NuestroEquipo";
 import VisionMision from "./views/VisionMision";
+import MedicDetailsView from "./components/Admin/Medic/MedicDetailsView";
 
 
 import About from "./views/About";
@@ -49,6 +50,7 @@ export default function App() {
 
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/medicos" element={<Medicos />} />
+                    <Route path="/medicos/:medicId" element={<MedicDetailsView />} />
                     <Route path="/pacientes" element={<Pacientes />} />
                     <Route path="/pacientes/:pacienteId" element={<PacientesDetailsView />} />
 

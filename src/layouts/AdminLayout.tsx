@@ -2,14 +2,13 @@ import { ToastContainer } from "react-toastify";
 import { Navigate, Outlet, Link } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "@/hooks/useAuth";
-import { ClipLoader } from "react-spinners";
 import AdminSidebar from "@/components/Sidebar/AdminSidebar";
 import Logo from "@/components/Logo";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Menu } from "lucide-react";
 
 export default function AdminLayout() {
-    const { user, isError, isLoading } = useAuth();
+    const { user, isError } = useAuth();
 
     if (isError) return <Navigate to="/login" />;
     if (user && user.role !== "admin") return <Navigate to="/profile" />;
@@ -71,13 +70,7 @@ export default function AdminLayout() {
 
                     {/* Main content */}
                     <main className="flex-1 p-6 md:p-10 overflow-y-auto">
-                        {isLoading ? (
-                            <div className="flex items-center justify-center h-full">
-                                <ClipLoader color="#000" size={50} />
-                            </div>
-                        ) : (
-                            <Outlet />
-                        )}
+                        <Outlet />
                     </main>
                 </div>
             </div>

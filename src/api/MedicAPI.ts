@@ -2,7 +2,7 @@ import api from "@/lib/axios";
 import { isAxiosError } from "axios";
 import { MedicFormData } from "@/types/index";
 import { medicListArraySchema } from "@/types/index";
-
+import { medicSchema } from "@/types/index";
 
 
 
@@ -34,6 +34,25 @@ export async function getMedics() {
     }
 }
 
+export async function getMedicById(medicId: string) {
+    try {
+        const url = `/medic/${medicId}`;
+        const { data } = await api.get(url);
+
+        const response = medicSchema.safeParse(data);
+        if (response.success) {
+            return response.data;
+        }
+
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error || "Error al obtener el médico");
+        } else {
+            throw new Error("Error desconocido al obtener el médico");
+        }
+    }
+}
+
 export async function searchMedics(search: string) {
     try {
         const url = `/medic/search?query=${search}`;
@@ -52,5 +71,19 @@ export async function searchMedics(search: string) {
             throw new Error(error.response.data.error || "Error al buscar los usuarios");
         }
         return [];
+    }
+}
+
+export async function deleteMedicById(medicId: string) {
+    try {
+        const url = `/auth/delete/${medicId}`;
+        const { data } = await api.delete(url);
+        return data;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error || "Error al eliminar el médico");
+        } else {
+            throw new Error("Error desconocido al eliminar el médico");
+        }
     }
 }

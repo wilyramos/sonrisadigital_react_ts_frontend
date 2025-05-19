@@ -4,9 +4,9 @@ interface PaginationProps {
     onPageChange: (page: number) => void;
 }
 
-function getPageNumbers (currentPage: number, totalPages: number): number[] {
+function getPageNumbers(currentPage: number, totalPages: number): number[] {
     const pageNumbers: number[] = [];
-    const maxVisiblePages = 5; // Maximum number of page buttons to show
+    const maxVisiblePages = 5;
 
     let startPage: number;
     let endPage: number;
@@ -35,40 +35,39 @@ function getPageNumbers (currentPage: number, totalPages: number): number[] {
     return pageNumbers;
 }
 
-export default function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
+export default function Pagination({
+    currentPage,
+    totalPages,
+    onPageChange,
+}: PaginationProps) {
     const pageNumbers = getPageNumbers(currentPage, totalPages);
+
     const handlePrevious = () => {
-        if (currentPage > 1) {
-            onPageChange(currentPage - 1);
-        }
+        if (currentPage > 1) onPageChange(currentPage - 1);
     };
 
     const handleNext = () => {
-        if (currentPage < totalPages) {
-            onPageChange(currentPage + 1);
-        }
-    };
-
-    const handlePageClick = (page: number) => {
-        if (page !== currentPage) {
-            onPageChange(page);
-        }
+        if (currentPage < totalPages) onPageChange(currentPage + 1);
     };
 
     return (
-        <div className="flex justify-center items-center mt-4">
+        <div className="flex justify-center items-center gap-2 mt-6">
             <button
                 onClick={handlePrevious}
                 disabled={currentPage === 1}
-                className="px-3 py-1 mx-1 bg-gray-200 text-gray-700 rounded-md disabled:opacity-50"
+                className="w-8 h-8 flex items-center justify-center rounded-full border border-gray-300 text-gray-500 hover:bg-gray-100 transition disabled:opacity-40 disabled:cursor-not-allowed"
             >
-                Anterior
+                ‹
             </button>
+
             {pageNumbers.map((page) => (
                 <button
                     key={page}
-                    onClick={() => handlePageClick(page)}
-                    className={`px-3 py-1 mx-1 rounded-md ${currentPage === page ? 'bg-teal-500 text-white' : 'bg-gray-200 text-gray-700'
+                    onClick={() => onPageChange(page)}
+                    className={`w-8 h-8 flex items-center justify-center rounded-full border text-sm transition
+            ${currentPage === page
+                            ? 'bg-teal-500 text-white border-teal-500'
+                            : 'border-gray-300 text-gray-600 hover:bg-gray-100'
                         }`}
                 >
                     {page}
@@ -78,10 +77,10 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
             <button
                 onClick={handleNext}
                 disabled={currentPage === totalPages}
-                className="px-3 py-1 mx-1 bg-gray-200 text-gray-700 rounded-md disabled:opacity-50"
+                className="w-8 h-8 flex items-center justify-center rounded-full border border-gray-300 text-gray-500 hover:bg-gray-100 transition disabled:opacity-40 disabled:cursor-not-allowed"
             >
-                Siguiente
+                ›
             </button>
         </div>
     );
-};
+}

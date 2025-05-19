@@ -2,117 +2,96 @@ import { FaPlus, FaSearch } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import ClipLoader from "react-spinners/ClipLoader";
-import { getUsers } from "@/api/AuthAPI"; 
 import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+
+import { getUsers } from "@/api/AuthAPI";
 import AddPacienteModal from "./AddPacienteModal";
 import PacientesList from "./PacientesList";
 import Heading from "../Heading";
-import { toast } from "react-toastify";
 import Pagination from "@/components/ui/Pagination";
 
 export default function Pacientes() {
     const navigate = useNavigate();
-    const location = useLocation();
+    const { search, pathname } = useLocation();
 
-    const [searchTerm, setSearchTerm] = useState("");
+    const queryParams = new URLSearchParams(search);
+    const page = parseInt(queryParams.get("page") || "1", 10);
+    const query = queryParams.get("query") || "";
 
-    const queryparams = new URLSearchParams(location.search);
-    const pageParam = queryparams.get("page") || "1";
-    const page = parseInt(pageParam, 10);
-    const query = queryparams.get("query") || "";
-    const limit = 10; 
-    // TODO: implementar la paginacion dinamica 
+    const [searchTerm, setSearchTerm] = useState(query);
 
-    // React Query
-    const { data: pacientesData, isLoading, isError } = useQuery({
-        queryKey: ["pacientes", page, limit, query],
-        queryFn: () => getUsers(page, limit, query),
+    const { data, isLoading, isError } = useQuery({
+        queryKey: ["pacientes", page, 10, query],
+        queryFn: () => getUsers(page, 10, query),
         retry: 1,
     });
 
-    // Mantener el input sincronizado con la URL
     useEffect(() => {
         setSearchTerm(query);
     }, [query]);
 
     const handleSearch = () => {
-        if (searchTerm.trim()) {
-            navigate(`?page=1&query=${encodeURIComponent(searchTerm.trim())}`);
-        } else {
-            toast.warn("Por favor, ingresa un término de búsqueda.");
-        }
+        if (!searchTerm.trim()) return toast.warn("Por favor, ingresa un término de búsqueda.");
+        navigate(`?page=1&query=${encodeURIComponent(searchTerm.trim())}`);
     };
 
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === "Enter") {
-            event.preventDefault();
-            handleSearch();
-        }
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") handleSearch();
     };
-
-    if (isLoading) {
-        return (
-            <div className="flex justify-center items-center h-screen">
-                <ClipLoader color="#36d7b7" loading size={50} />
-            </div>
-        );
-    }
-
-    if (isError) {
-        return <div className="text-red-500 text-center mt-4">Error al cargar pacientes.</div>;
-    }
-
-    if (!pacientesData) {
-        return <div className="text-gray-500 text-center mt-4">No hay pacientes disponibles.</div>;
-    }
-
-    const pacientesListShow = pacientesData?.users || [];
-    const totalPages = Math.ceil(pacientesData.total / limit);
 
     return (
         <>
-            <div>
-                <div className="flex justify-between items-center mb-8">
+            <div className="min-h-screen px-4 py-6">
+                <div className="flex justify-between items-center mb-6">
                     <Heading>Lista de Pacientes</Heading>
                     <button
-                        type="button"
-                        className="flex items-center px-4 py-2 bg-teal-500 text-white rounded-lg shadow-lg hover:bg-teal-700 transition duration-200 transform hover:scale-105 cursor-pointer"
-                        onClick={() => navigate(location.pathname + `?newPaciente=true`)}
+                        onClick={() => navigate(`${pathname}?newPaciente=true`)}
+                        className="flex items-center gap-2 px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition"
                     >
-                        <FaPlus className="mr-2" size={16} />
-                        Agregar Paciente
+                        <FaPlus size={16} />
+                        Agregar
                     </button>
                 </div>
 
-                <div className="relative mb-4">
+                <div className="relative mb-6">
                     <input
                         type="text"
                         placeholder="Buscar pacientes..."
-                        className="w-full px-4 py-3 border border-gray-300 rounded-full shadow-md focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500 transition duration-200"
+                        className="w-full px-4 py-2 pr-12 border border-gray-300 rounded-full shadow-sm focus:ring-teal-500 focus:border-teal-500"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         onKeyDown={handleKeyDown}
                     />
                     <button
-                        type="button"
-                        className="absolute right-2 top-1/2 transform -translate-y-1/2 px-4 py-3 bg-lime-500 text-white rounded-full shadow-md hover:bg-lime-600 transition duration-200 cursor-pointer"
                         onClick={handleSearch}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 bg-lime-500 text-white p-2 rounded-full hover:bg-lime-600 transition"
                     >
                         <FaSearch />
                     </button>
                 </div>
 
-                <PacientesList pacientes={pacientesListShow} />
-
-                <Pagination
-                    currentPage={page}
-                    totalPages={totalPages}
-                    onPageChange={(newPage) => {
-                        navigate(`?page=${newPage}&query=${encodeURIComponent(searchTerm)}`);
-                    }}
-                />
+                {isLoading ? (
+                    <div className="flex justify-center items-center py-20">
+                        <ClipLoader color="#36d7b7" size={50} />
+                    </div>
+                ) : isError ? (
+                    <p className="text-center text-red-500 mt-6">Error al cargar pacientes.</p>
+                ) : !data || data.users.length === 0 ? (
+                    <p className="text-center text-gray-500 mt-6">No hay pacientes disponibles.</p>
+                ) : (
+                    <>
+                        <PacientesList pacientes={data.users} />
+                        <Pagination
+                            currentPage={page}
+                            totalPages={data.totalPages}
+                            onPageChange={(newPage) =>
+                                navigate(`?page=${newPage}&query=${encodeURIComponent(searchTerm)}`)
+                            }
+                        />
+                    </>
+                )}
             </div>
-
             <AddPacienteModal />
         </>
     );
