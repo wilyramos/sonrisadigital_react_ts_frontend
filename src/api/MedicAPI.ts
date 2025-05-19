@@ -76,7 +76,7 @@ export async function searchMedics(search: string) {
 
 export async function deleteMedicById(medicId: string) {
     try {
-        const url = `/auth/delete/${medicId}`;
+        const url = `/medic/${medicId}`;
         const { data } = await api.delete(url);
         return data;
     } catch (error) {
