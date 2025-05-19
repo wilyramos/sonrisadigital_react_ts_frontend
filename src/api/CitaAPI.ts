@@ -129,3 +129,15 @@ export async function deleteCitaById(citaId: string) {
     }
 
 }
+
+export async function getAppointmentsReportWeekly() {
+    try {
+        const url = `/cita/report/weekly`;
+        const { data } = await api.get(url);
+        return data;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error || "Error al obtener el reporte semanal de citas");
+        }
+    }
+}

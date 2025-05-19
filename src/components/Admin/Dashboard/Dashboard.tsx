@@ -1,18 +1,9 @@
 import { Link } from "react-router-dom";
 import CitasFiltering from "../Cita/CitasFiltering";
 import {
-    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar
+    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts';
-
-const data = [
-    { name: 'Lun', citas: 12 },
-    { name: 'Mar', citas: 8 },
-    { name: 'Mié', citas: 15 },
-    { name: 'Jue', citas: 10 },
-    { name: 'Vie', citas: 20 },
-    { name: 'Sáb', citas: 25 },
-    { name: 'Dom', citas: 30 },
-];
+import GraficoSemanal from "./GraficoSemanal";
 
 const data2 = [
     { name: 'Ene', citas: 12 },
@@ -36,7 +27,7 @@ export default function Dashboard() {
             {/* Gráficos */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Gráfico semanal */}
-                <div className="bg-white shadow-md rounded-2xl p-6">
+                {/* <div className="bg-white shadow-md rounded-2xl p-6">
                     <h2 className="text-lg font-semibold text-gray-800 mb-2">Citas por Día (Semana Actual)</h2>
                     <p className="text-sm text-gray-500 mb-4">Cantidad de citas por día.</p>
                     <ResponsiveContainer width="100%" height={300}>
@@ -48,7 +39,9 @@ export default function Dashboard() {
                             <Bar dataKey="citas" fill="#14b8a6" radius={[6, 6, 0, 0]} />
                         </BarChart>
                     </ResponsiveContainer>
-                </div>
+                </div> */}
+
+                <GraficoSemanal />
 
                 {/* Gráfico mensual */}
                 <div className="bg-white shadow-md rounded-2xl p-6">
