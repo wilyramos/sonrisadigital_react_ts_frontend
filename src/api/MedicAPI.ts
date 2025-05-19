@@ -87,3 +87,17 @@ export async function deleteMedicById(medicId: string) {
         }
     }
 }
+
+export async function updateMedic({ medicId, formData }: { medicId: string; formData: MedicFormData }) {
+    try {
+        const url = `/medic/${medicId}`;
+        const { data } = await api.put(url, formData);
+        return data;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.message || "Error al actualizar el médico");
+        } else {
+            throw new Error("Error desconocido al actualizar el médico");
+        }
+    }
+}
