@@ -55,7 +55,7 @@ export async function getMedicById(medicId: string) {
 
 export async function searchMedics(search: string) {
     try {
-        const url = `/medic/search?query=${search}`;
+        const url = `/medic/?query=${search}`;
         const { data } = await api.get(url);
         // console.log(data);
         const response = medicListArraySchema.safeParse(data);

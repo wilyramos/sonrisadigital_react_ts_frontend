@@ -20,8 +20,6 @@ type CitaFormProps = {
 }
 
 export default function CitaForm({ errors, register, setValue }: CitaFormProps) {
-
-
     /** Buscar usuarios */
     const [searchResults, setSearchResults] = useState<UserListResponse | null>([])
     const [selectedUser, setSelectedUser] = useState<number | null>(null)
