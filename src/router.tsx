@@ -21,6 +21,7 @@ import MedicDetailsView from "./components/Admin/Medic/MedicDetailsView";
 
 
 import About from "./views/About";
+import ConsultarView from "./views/auth/ConsultarView";
 
 export default function App() {
     return (
@@ -37,6 +38,7 @@ export default function App() {
                     <Route path="/nosotros/vision-mision" element={<VisionMision />} />
                     <Route path="/login" element={<LogiwView />} />
                     <Route path="/register" element={<RegisterView />} />
+                    <Route path="/consultar" element={<ConsultarView />} />
                     <Route path="/forgot-password" element={<h1>Forgot Password</h1>} />
                 </Route>
 

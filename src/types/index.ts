@@ -121,8 +121,18 @@ export const citaListResponseSchema = z.object({
     currentPage: z.number(),
 }) 
 
+
+
+
 // CitaListResponseByPatientId es un array de los objetos de citaSchema pero sin el patient y medic
 export const citaListResponseByPatientIdSchema = z.array(citaSchema.omit({ patient: true }));
+
+// Omitir al paciente en la respuesta de la cita
+export const citasResponseSchemaByPatientDNI = z.object({
+    patient: userSchema,
+    appointments: citaListResponseByPatientIdSchema,
+})
+
 export type CitaListResponseByPatientId = z.infer<typeof citaListResponseByPatientIdSchema>
 
 

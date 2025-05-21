@@ -103,7 +103,16 @@ export default function ModernLoginView() {
                             Crear cuenta
                         </Link>
                     </p>
+                    
+                    <p className="text-gray-600 text-sm">
+                        ¿Eres paciente?{" "}
+                        <Link to="/consultar" className="text-teal-500 font-semibold hover:underline">
+                            Consultar cita
+                        </Link>
+                    </p>
+
                 </div>
+
             </div>
         </div>
     );

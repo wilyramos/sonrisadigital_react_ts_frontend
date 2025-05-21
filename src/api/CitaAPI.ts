@@ -3,7 +3,7 @@ import { isAxiosError } from "axios";
 import { CitaFormData } from "@/types/index";
 import { citaListSchema } from "@/types/index";
 import { CitaStatus } from "@/types/index";
-import { citaListResponseByPatientIdSchema } from "@/types/index";
+import { citaListResponseByPatientIdSchema, citasResponseSchemaByPatientDNI } from "@/types/index";
 import { citaListResponseSchema } from "@/types/index";
 
 
@@ -126,6 +126,24 @@ export async function getCitasByPatientId(patientId: string) {
         const { data } = await api.get(url);
         const response = citaListResponseByPatientIdSchema.safeParse(data);
         
+        if (response.success) {
+            return response.data;
+        }
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error || "Error al obtener las citas por paciente");
+        }
+    }
+}
+
+export async function getCitasByPatientDNI(dni: string) {
+    try {
+        const url = `/cita/paciente/dni/${dni}`;
+        const { data } = await api.get(url);
+        console.log(data);
+        const response = citasResponseSchemaByPatientDNI.safeParse(data);
+        
+        console.log(response);
         if (response.success) {
             return response.data;
         }
