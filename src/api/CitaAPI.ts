@@ -4,6 +4,7 @@ import { CitaFormData } from "@/types/index";
 import { citaListSchema } from "@/types/index";
 import { CitaStatus } from "@/types/index";
 import { citaListResponseByPatientIdSchema } from "@/types/index";
+import { citaListResponseSchema } from "@/types/index";
 
 
 export async function crearCita(formData: CitaFormData) {
@@ -22,6 +23,8 @@ export async function crearCita(formData: CitaFormData) {
 
 export async function getCitas() {
     try {
+
+
         const url = "/cita";
         const { data } = await api.get(url);
         // console.log(data);
@@ -36,6 +39,23 @@ export async function getCitas() {
         }
     }
 }
+
+export async function getCitasWithPagination(page: number, limit: number, query: string) {	
+    try {
+        const url = `/cita/all/citas?page=${page}&limit=${limit}&query=${query}`;
+        const { data } = await api.get(url);
+        const response = citaListResponseSchema.safeParse(data);
+
+        if (response.success) {
+            return response.data;
+        }
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error || "Error al obtener las citas");
+        }
+    }
+}
+
 
 export async function getCitasSearch(searchTerm: string) {
     try {

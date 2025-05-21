@@ -1,117 +1,103 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import { FaPlus } from "react-icons/fa";
-import AddCitaModal from "./AddCitaModal";
-import { useQuery } from "@tanstack/react-query";
-import { getCitas } from "@/api/CitaAPI";
-import ClipLoader from "react-spinners/ClipLoader";
-import CitasList from "./CitasList";
-import { FaSearch } from "react-icons/fa";
 import { useState } from "react";
-import { toast } from "react-toastify";
-import { useMutation } from "@tanstack/react-query";
-import { getCitasSearch } from "@/api/CitaAPI";
-import type { CitaList } from "@/types/index";
-import CitaDetailsModal from "./CitaDetailsModal";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+
+import { FaPlus, FaSearch } from "react-icons/fa";
+import ClipLoader from "react-spinners/ClipLoader";
+import { getCitasWithPagination } from "@/api/CitaAPI";
+
 import Heading from "../Heading";
+import CitasList from "./CitasList";
+import AddCitaModal from "./AddCitaModal";
+import CitaDetailsModal from "./CitaDetailsModal";
 import DeleteCitaModal from "./DeleteCitaModal";
+import Pagination from "@/components/ui/Pagination";
+
 export default function Citas() {
-
-    // Search 
-    const [searchTerm, setSearchTerm] = useState('');
-    const [searchCitaResults, setSearchCitaResults] = useState<CitaList | null>();
-
-
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchTerm(event.target.value);
-    };
-
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === 'Enter') {
-            handleSearch();
-        }
-    };
-
-    const handleSearch = () => {
-
-        if (searchTerm.trim()) {
-
-            console.log("Buscando citas por:", searchTerm);
-            citasMutation.mutate(searchTerm.trim());
-        } else {
-            // Si no hay término de búsqueda, puedes mostrar un mensaje o realizar otra acción
-            toast.info('Por favor, ingresa un término de búsqueda.');
-        }
-
-    };
-
-    //Mutation for get citas
-    const citasMutation = useMutation({
-        mutationFn: getCitasSearch,
-        onError: (error) => {
-            toast.error(error.message || 'Error al cargar las citas.');
-        },
-        onSuccess: (data) => {
-            setSearchCitaResults(data);
-        },
-    })
-
     const navigate = useNavigate();
-    const location = useLocation();
+    const { search, pathname } = useLocation();
+
+    const queryParams = new URLSearchParams(search);
+    const page = parseInt(queryParams.get("page") || "1", 10);
+    const query = queryParams.get("query") || "";
+
+    const [searchTerm, setSearchTerm] = useState(query);
 
     const { data: citasData, isLoading, isError } = useQuery({
-        queryKey: ["citas"],
-        queryFn: () => getCitas(),
+        queryKey: ["citas", page, 10, query],
+        queryFn: () => getCitasWithPagination(page, 10, query),
         retry: 1,
     });
 
-    // Show list of citas
-    const showcitasList = searchCitaResults ? searchCitaResults : citasData;
+    const handleSearch = () => {
+        if (!searchTerm.trim()) {
+            navigate(`?page=1`);
+        }
+        navigate(`?page=1&query=${encodeURIComponent(searchTerm.trim())}`);
+    };
 
-    if (isLoading) return <div className="text-center"><ClipLoader color="#10b981" size={40} /></div>;
-    if (isError) return <div className="text-red-500 text-center">Error al cargar las citas.</div>;
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === "Enter") handleSearch();
+    };
 
+
+
+    if (isLoading)
+        return <div className="text-center"><ClipLoader color="#10b981" size={40} /></div>;
+
+    if (isError)
+        return <div className="text-red-500 text-center">Error al cargar las citas.</div>;
+
+    if (!citasData)
+        return <p className="text-gray-500 text-center py-6">No hay citas programadas.</p>;
 
     return (
-
         <>
             <div className="flex justify-between items-center mb-8">
                 <Heading>Lista de Citas</Heading>
                 <button
-                    onClick={() => navigate(location.pathname + `?newCita=true`)}
-                    className="flex items-center px-4 py-2 bg-teal-500 text-white rounded-md shadow-sm hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 transition duration-150"
+                    onClick={() => navigate(`${pathname}?newCita=true`)}
+                    className="flex items-center px-4 py-2 bg-teal-500 text-white rounded-md shadow-sm hover:bg-teal-600 transition"
                 >
                     <FaPlus className="mr-2" /> Nueva Cita
                 </button>
             </div>
 
             {/* Search */}
-
             <div className="relative mb-4">
                 <input
                     type="text"
                     placeholder="Buscar citas por paciente/descripcion/tratamiento..."
-                    className="w-full px-4 py-3 border border-gray-300 rounded-full shadow-md focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500 transition duration-200"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-full shadow-md focus:outline-none focus:ring-1 focus:ring-teal-500"
                     value={searchTerm}
-                    onChange={handleInputChange}
+                    onChange={(e) => setSearchTerm(e.target.value)}
                     onKeyDown={handleKeyDown}
                 />
                 <button
                     type="button"
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2 px-4 py-3 bg-teal-500 text-white rounded-full shadow-md hover:bg-teal-700 transition duration-200 cursor-pointer"
-                    onClick={() => handleSearch()}
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 px-4 py-3 bg-teal-500 text-white rounded-full shadow-md hover:bg-teal-700"
+                    onClick={handleSearch}
                 >
                     <FaSearch />
                 </button>
             </div>
 
-            <div>
-                <CitasList citas={showcitasList} />
-            </div>
+            {/* Citas List */}
+            <CitasList citas={citasData.appointments} />
+
+            {/* Paginación */}
+            <Pagination
+                currentPage={page}
+                totalPages={citasData.totalPages}
+                onPageChange={(newPage) =>
+                    navigate(`?page=${newPage}&query=${encodeURIComponent(searchTerm)}`)
+                }
+            />
+
+            {/* Modals */}
             <AddCitaModal />
             <CitaDetailsModal />
             <DeleteCitaModal />
         </>
-
     );
 }
-

@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useState, useEffect } from "react";
-import { toast } from "react-toastify";
 
 import { getUsers } from "@/api/AuthAPI";
 import AddPacienteModal from "./AddPacienteModal";
@@ -32,7 +31,7 @@ export default function Pacientes() {
     }, [query]);
 
     const handleSearch = () => {
-        if (!searchTerm.trim()) return toast.warn("Por favor, ingresa un término de búsqueda.");
+        if (!searchTerm.trim()) return navigate(`?page=1`);
         navigate(`?page=1&query=${encodeURIComponent(searchTerm.trim())}`);
     };
 
